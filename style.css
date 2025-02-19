@@ -1,4 +1,28 @@
 body{
-	background-color: #400658;
+	background-image: url('obrazky/galaxy_2.jpg');
+	background-size: cover;
 	color:  #f8f6f9;
+}
+
+nav{
+	background-color: #d0a5c9;
+	padding: 10px;
+}
+
+#content{
+	padding-left: 20px; padding-right: 20px;
+}
+
+#main{
+	background-color: #411e7a;
+	margin: 20px;
+	padding: 5px 20px;
+}
+
+.navlink{
+	padding:15px;
+}
+
+.tutlink{
+	color:#FFFFFF;
 }
