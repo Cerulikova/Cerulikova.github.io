@@ -12,7 +12,83 @@
 <my-header></my-header>
 	<div id="main">
 		<h3>Denník</h3>
-		<p>TODO</p>
+		<div>
+			<h4>Stav práce ku dňu 21.2.2025</h4>
+			<p class="diaryEntry">
+				Úplne na začiatku, keď sme sa ešte v rámci predmetu Ročníkový projekt a úvod do bakalárskej práce mali stretnúť so
+				školiteľmi a dohodnúť sa s nimi na zadaní bakalárskej práce, znel názov mojej práce Počítačová hra s veľkým počtom
+				interagujúcich NPC. Na začiatku tretieho ročníka sme však od tejto témy upustili, keďže sa môjmu školiteľovi nezdala
+				úplne premyslená. Bolo teda treba vymyslieť niečo nové. Pojem "jazdec", neskôr "skokan" až nakoniec anglické slovo 
+				"hopper" na označenie človeka alebo bytosti schopnej cestovať (skákať) medzi svetmi som si vymyslela možno už v škôlke.
+				Neviem presne, miestami mám pocit, že ku mne patril odjakživa. Preto ako náhle som zavetrila príležitosť použiť ho znovu,
+				okamžite som po nej skočila. Mala som predstavu tohto strateného hoppera, ktorý sa ocitol úplne sám na v jednom neznámom 
+				svete na ostrove uprostred ničoho. Má zo sebou len svoj zápisník a rozbitý prístroj, ktorý potrebuje opraviť, aby
+				mohol preskočiť späť do svojho sveta. V pôvodnom pláne bolo len veľké množstvo zvierat, ktorým sa bude treba vyhýbať
+				a žiadne iné ľuské postavy. Hráč nemal mať k dispozícii nijakú zbraň, len možnosť obetovať časť svojej zozbieranej
+				energie, aby niektorého tvora dočasne paralyzoval.<br><br>
+				Po rozhovore so školiteľom sme sa dohodli prácu zamerať práve na rôznorodé správanie NPC v hernom svete. A tak som
+				začala presnejšie formulovať špecifikáciu svojej hry.Ukázalo sa, že niektoré z pôvodných myšlienok sú dosť obmedzujúce.
+				Preto nakoniec pribudla dednina s niekoľkými obyvateľmi, s ktorými by hráč mohol obchodovať a plniť pre nich rôzne
+				úlohy. Takisto som sa rozhodla dať hráčovi meč, keďže mi to otvorilo niekoľko nových spôsobov interakcie hráča s tvormy
+				na ostrove. Keďže som vedela, že sa musím spoliehať na modely a animácie, ktoré sa mi podarí nájsť na internete strávila
+				som nejaký čas hladaním a zisťovaním, aké rôzne zvieratá a príšery sa mi podarí zohnať. Nakoniec som dala dokopy asi 20
+				modelov s dostatočným počtom animácií. Väčšina z nich pochádza z Fab.com a ľuské modely a animácie mám z Mixama. Keď už
+				som vedela aké zvery a beštie viem použiť, navrhla som si a poznačila 20 rôznych druhov chovania a konečne sa odhodlala
+				začať niečo programovať.<br><br>
+				Ako prvé som si zobrala za úlohu spraviť základné ovládanie hráča. Nič zložité. Potom sa vynorila nasledujúca otázka.
+				Aká veľká má byť herná mapa? Odpoveď: nejasná. Rozhodli sme sa vychádzať z času potrebného na prejdenie s jednej strany
+				mapy na druhú. Vtedy som sa rozhodla vyskúšať rozmery 10 000 x 10 000 (asi metrov, myslím, že Unreal Engine používa
+				metre). Konečné slovo mal nakoniec môj počítač, ktorý sa jednoznačne vyjadril, že viac ako 3 000 x 3 000 nedá. A tak som
+				sa na tomto obmedzenom priestore pustila do budovania môjho vysnívaného ostrova. Rozdelila som ho na 4 pomyselné oblasti.
+				Pláž, lúka, les a hory. V ideálnom prípade sa mi možno podarí nadstaviť navigáciu tak, aby tvory ostávali vo svojich
+				zónach, ale zatiaľ rozdelenie ostáva len kozmetické. Potom som sa rozhodla rozpohybovať Slnko a postarať sa o krásnu
+				zmenu farby oblohy v závyslosti od časti dňa. Na oblohu som použila čosi, čo sa v Unreal Engine volá SkySphere.Je to
+				sféra, do ktorej sa vloží celá herná mapa a na jej vnútornej strane sa vykresluje obloha s mrakmi a hviezdami. Potom
+				sa jej dá referencia na Directional Light, druh svetla, ktorý slúži ako Slnko a potom sa obloha vykreslená na tejto
+				sfére aktualizuje podľa uhla otočenia vybraného Directional Light. Ďaľší problém, ktorému som čelila bolo otáčanie Slnka
+				okolo zeme. Z nejakého dvôvodu sa totiž vždy o polnoci zaseklo. Problém sa ukázal byť s spôsobe, v ktorom Unreal Engine
+				spočítava úhly. Takže ak Slnko dosihlo otočenie presne 90 stupňov, vypočítaný uhol, o ktorý sa malo otočiť v ďaľšej
+				iterácii bol vždy 0. Na koniec sme spolu zo školiteľom nevymysleli nič múdrejšie než kontrolovať, či Slnko náhodou
+				nedosiahlo otočenie 90 stupňov a v tom prípade ho ešte na silu pootočili o kúsok ďalej.<br><br>
+				Teraz, som sa rozhodla, že je najvyšší čas, vyskúšať si vytvoriť nejaké zviera. Ako pokusného králika som si zvolila
+				ľaň, keďže je jedna z jednoduchších tvorov, ktorých som vymyslela. Odladiť jej správanie a zabezpečiť správne prehrávanie
+				animácií mi trvalo asi týždeň. Najväčším kameňom úrazu bolo moje nesprávne pochopenie rozhodovacích stromov, ktoré
+				zabezpečujú ovládanie NPC postáv. Špecificky vrcholov Select a Sequence. Sequence je vrchol, ktorý vykoná všetky príkazy,
+				ktoré má pod sebou v poradí z ľava do prava. To čo som si ale neuvedomila je, že ak nietorý s týchto príkazov zlyhá,
+				vykonávanie rozhodovacieho stromu sa vráti späť na začiatok bez toho, aby dokončil vykonávanie nasledujúcich príkazov.
+				Select zase vykoná len jeden príkaz z tých, ktoré ma pod sebou. Prvý, ktorý mu víde ako úspešný. Preto je zásadné
+				správne určiť priority a ako prvé dať príkazy, ktoré ak sa dajú vykonať, majú mať prednosť pred ostatnými. A potom je
+				tu ešte jedna zásadná chyba, ktorú stále opakujem a potom sa divým, prečo mi vykonávanie stromu nefunguje. Pri vytváraní
+				vlastných úloh je dôležité nezabudnúť ich ukončiť príkazom <strong>Finish Execute s parametrom Success nastaveným na
+				true.</strong> Inak strom nebude vedieť, že tento príkaz už skončil s úspechom a zasekne sa v čakaní na jeho skončenie.
+				<br><br>
+				Keď sa ľaň konečne naučila správať slušne, začala som stavať dedinu a do nej som vytvorila niekoľko obyvateľov. Ešte tam
+				nie sú všetci, ale obchodovanie a tvorba elixírov už funguje. Tu rovnako ako aj pri tvorbe inventára a rôznych menu okien
+				som postupovala podľa rôznych tutoriálov alebo som uplatniľa zručnosti, ktoré som získala na predmete Game engines (1) a
+				preto ich nebudem rozoberať do podrobna. Spomeniem len jednu zásadnú chybu, ktorú som urobila pri tvorbe dialógového
+				okna, ktorá ma stála dve hodiny debugovania. <strong>Nikdy neoznačte funkciu, ktorá robí niečo iné ako vracia hodnotu
+				bez toho, aby ju akokoľvek zmenila ako pure.</strong> Bude to stvárať zverstvá. Unreal Engine si totiž tieto pure
+				funkcie volá vždy vtedy, keď ich potrebuje, čo môže byť častejšie, ako by ste si priali. Mne to konkrétne spôsobilo to,
+				že premená, ktorá určovala, ktorý kus dialógu sa má zobraziť, sa zväčšila vždy dva krát a tak sa objavoval vždy iba každá
+				druhá časť textu.<br><br>
+				K súčasnému dátumu som ešte dokončila útok hráča mečom na zvieratá. Jeleňa, ktorého sa mi podarilo odladiť celkom
+				rýchlo, keďže veľkú časť svojho správania zdedil od ľane. Poriešila som smrť hráča, pravidelné spawnovanie rastlín,
+				ukladanie hry (všetko okrem zvierat) a hádzanie návnad. Tieto návnady boli boj sám o sebe. Najprv som sa hádzanie
+				pokúšala robiť pomocou Projectile Movement Component. Je to kompnent, ktorý simuluje let projektilu. Objekt(actor),
+				ktorý má tento komponent by mal po vytvorní automaticky vyletieť (hodiť sa) podľa zadaných parametrov. Toto riešenie
+				mi však nefungovalo. Po dlhom pátraní som prišla na to, že ak chcem, aby tento komponet fungoval správne, nemôže mať
+				actor, ktorému patrí zapnuté simulovanie fyziky, lebo to má pred týmto komponetom prednosť a teda sa efekt komponetu
+				úplne preskočí. Druhé riešenie, ktoré som našla bolo pomocou funkcie Set Physics Linear Velocity, ktorá prídá smer a
+				rýchlosť zvolenému komponetu. V mojom prípade statickému meshu hodenej návnady. Toto riešenie už fungovalo, ale zase
+				tu bol háčik. Hodil sa iba mesh a jeho podkomponety, ale koreň actora a teda aj jeho pozícia ostala nezmenená. To
+				spôsobilo, že nalákané zvieratá chodili na miesto, kde hráč návnadu vyhodil a nie tam kde dopadla. Najprv som sa
+				problém pokúsila riešiť časovačom, ktorý pravidelne prispôsoboval pozíciu koreňového komponetu podľa pozície meshu.
+				Toto riešenie je však na prvý pohľad neefektívne a tak som sa musela zastaviť a prerobiť všetky zbierateľné itemy tak,
+				aby ich mesh bol koreňovým komponetom. Prečo som to tak rovno nespravila hneď na začiatku?<br><br>
+				V sučasnosti je cieľom povytvárať, čo najviac zvierat a zabezpečiť ich objavovanie sa vo svete. Realisticky si uvedomujem,
+				že asi nestihnem všetky, ktoré som vymyslela aj implementovať, ale budem sa snažiť dosiahnuť, čo najväčšiu pestrosť.
+			</p>
+		</div>
 	</div>
 <my-footer></my-footer>
 </div>

@@ -1,6 +1,7 @@
 body{
 	background-image: url('obrazky/galaxy_2.jpg');
 	background-size: cover;
+	background-repeat: no-repeat;
 	color:  #f8f6f9;
 }
 
@@ -21,8 +22,18 @@ nav{
 
 .navlink{
 	padding:15px;
+	color: #411e7a;
 }
 
 .tutlink{
 	color:#FFFFFF;
+}
+.diaryEntry{
+	margin-left:10px;
+}
+
+.shortPageFooter{
+	position: absolute;
+	bottom:0;
+	padding-bottom:10px;
 }
