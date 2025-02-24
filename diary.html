@@ -2,6 +2,7 @@
 <html>
 <head>
 	<meta charset = "utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 	<title>Cerulikova - Denník</title>
 	<link href="style.css" rel="stylesheet">
 </head>
@@ -87,6 +88,41 @@
 				aby ich mesh bol koreňovým komponetom. Prečo som to tak rovno nespravila hneď na začiatku?<br><br>
 				V sučasnosti je cieľom povytvárať, čo najviac zvierat a zabezpečiť ich objavovanie sa vo svete. Realisticky si uvedomujem,
 				že asi nestihnem všetky, ktoré som vymyslela aj implementovať, ale budem sa snažiť dosiahnuť, čo najväčšiu pestrosť.
+			</p>
+		</div>
+		<div>
+			<h4>24.2.2025</h4>
+			<p class="diaryEntry">
+				Ako úlohu od posledného zápisu som si dala <strong>vlky</strong>. Chovanie vlkov v mojej hre je zhruba nasledovné: je
+				jeden alfa a niekoľko normálnych vlkov. Alfa rozhoduje, či je svorka v pokoji, na love, alebo či naháňa určitý cieľ.
+				Ostatné vlky hlásia alfovi všetko, čo videli alebo počuli a on potom na to nejak zareaguje. "Nič zložíté", povedala som
+				si. "To dám za dva dni." Zle! V súvislosti s vlkmi sa vyskytli dva hlavné problémy. Po prvé to boli kolízie. Nadstavila
+				som kolízny box a očakávala som, že to bude stačiť na to, aby vlky chodili okolo seba. Veľmi rýchlo som však zistila,
+				že vlky majú tendenciu sa zaseknúť jeden v druhom, čo nie len že nevyzerá pekne, ale spôsobí aj to, že sa zaseknú a
+				nevedia sa ďalej hýbať. Prišla som na to, že tento problém vzniká s najväčšou pravdepodobnosťou preto, lebo vstavaná
+				funkcia, ktorá vracia náhodné súradnice, na ktoré sa vie postava pohnúť, brala do úvahy len statické prekážky a nie
+				ostatných vlkov, čo spôsobovalo, zrážky. Najprv som sa problém snažila riešiť tak, že som vlkov označila ako dynamické
+				prekážky, čo do istej miery pomohlo, ale zrážky sa stále opakovali. Po ďalšom pátraní som našla v dokumentácii jednu
+				vlastnosť <strong>Character Movement Component</strong>-tu, ktorý všetky tvory v mojej hre ovládané počítačom používajú
+				na zabezpečenie pohybu. Táto vlastnosť sa nazýva <strong>Avoidance</strong> a je presne to čo som potrebovala. Keď
+				sa zapne, tak pomocou niekoľkých parametrov sa dá nadstaviť vzdialenosť, na ktorú sa majú postavy obchádzať aj silu,
+				ktorou sa majú od seba "odstrčiť". Bohužila avoidance berie do úvahy len koreňový komponet, ktorý je v mojom prípade
+				kolízna kapsula, ktorú som musela zväčšiť tak, aby obalila celého vlka. Tým som stratila presnosť, takže vlk blokuje
+				ovela viac priestoru ako vizuálne zaberá. Zato sa mi, ale podarilo zbaviť zrážok medzi vlkmi a aj náhodný pohyb vlkov
+				vyzerá o čosi prirodzenejšie.<br><br>
+				Druhý problém nebol ani tak problém ako hlúpa chyba. Takže alfa robí všetky rozhodnutia za svorku. Čo ale, keď alfa
+				je zabitý? Napísala som jednoduchú funkciu, ktorú má alfa zavolať vždy pred svojou smrťou. Zo živých vlkov v svorke
+				vyberie náhodne jedného a toho označí ako nového alfu. Zároveň mu pošle ešte niake ďalšie hodnoty, ktoré bude nový alfa
+				potrebovať na to, aby svorka bez problémov pokračovala v tom, čo práve robí a na záver oznámi ostatným vlkom, že sa alfa
+				zmenil. Túto funkciu som napísala spustila som hru, a po smrti alfi editor vypísal kopu chýb, že sa vlci snažili 
+				volať funkcie na null hodnote. Krása! Najprv mi napadlo, že sa asi funkcia nevykoná pred tým ako je pôvodný alfa zničený.
+				Táto teória však bola vyvrátená pomocnými výpismi. Navyše sa zdalo, že nový alfa sa nadstavý, ale svorka sa ho proste
+				rozhodne nerešpektovať. Až včera večer, keď som funkciu na voľbu nového alfu čítala snáď po stý krát mi napadlo: ALE
+				TÁ RANDOM FUNKCIA PREDSA VRACIA VŽDY INÚ NÁHODNÚ HODNOTU. Takže, ja som si vypýtala náhodného vlka zo svorky, ale 
+				nikam som si ho neuložila, ale zakaždým som si pýtala jeho hodnotu od funkcie random. Pomoc. Na jednej strane, pri
+				tom ako moja funkcia vyzerá zapísaná pomocou Blueprintov (vizuálneho skriptovacieho jazyka, ktorý používa unreal engin)
+				chápem prečo som si to nevšimla skôr, ale aj tak ma šlo poraziť, keď som si to všimla.<br><br>
+				Potom to bolo už iba o doladení posledných detailov a kapitolu vlky pokladám za uzavretú.
 			</p>
 		</div>
 	</div>

@@ -2,6 +2,7 @@ body{
 	background-image: url('obrazky/galaxy_2.jpg');
 	background-size: cover;
 	background-repeat: no-repeat;
+	background-attachment:fixed;
 	color:  #f8f6f9;
 }
 
@@ -33,7 +34,11 @@ nav{
 }
 
 .shortPageFooter{
-	position: absolute;
+	position: fixed;
 	bottom:0;
 	padding-bottom:10px;
+}
+
+.shortPage{
+	margin-bottom:100px;
 }
