@@ -125,6 +125,40 @@
 				Potom to bolo už iba o doladení posledných detailov a kapitolu vlky pokladám za uzavretú.
 			</p>
 		</div>
+			<h4>3.3.2025</h4>
+			<p class="diaryEntry">
+				Od posledného zápisu som sa stretla zo školiteľom, kde sme sa porozprávali o mojom postupe na práci. Rozhodli sme sa, že
+				teraz je najdôležitejšie pokračovať v implementácii tvorov. Takisto sa nesmie zabudnúť ošetriť, aby hráč nemohol vypadnúť
+				z hernej mapy a pridať intro a koniec hry. Na označovanie toho, aké vzťahy sú medzi tvormi (a aj hráčom) som doteraz
+				používala <strong>tagy</strong>. Toto riešenie je funkčné, ale školiteľ ma upozornil, že je náchylné na preklepy. Ak sa
+				niekde dopustím preklepu v mene tagu nebude to správne fungovať a chyba sa bude ťažko hľadať. Doporučil mi, aby som
+				radšej použila <strong>intrefaci</strong>, ktoré nebudú obsahovať žiadne funkcie na označenie tvorov a nehladala
+				tvory podľa tagu, ale podľa toho, či implementujú daný interface. Tento návrh som zaiplementovala a tagy som z projektu
+				odstránila.<br><br>
+				Potom som pracovala na novom tvorovi - <strong>Vlkolak</strong>. Pri implementovaní vlkolaka som sa snažila, čo najviac
+				funkcií spúšťať priamo cez rozhodovací strom. Totiž, pri programovaní vlkov som veľa úloh v rozhodovacom strome iba
+				zavolala a potom som nechala samotného aktora BP_wolf, aby ich vykonal. To spôsobovalo, že som musela rôznymi obklukami
+				(napr. nadstavovaním rýchlosti pohybu na 0) zabrániť, aby sa počas prehrávania animácie zavýjania vlk začal posúvať.
+				Pri vlkolakovi som sa tomuto chcela vyhnúť tak, že prehrávanie animácií som sa rozhodla volať priamo v strome pomocou
+				preddefinovanej úlohy <strong>Play Animation</strong>. Tá zabezpečila, že sa nezačala žiadna ďalšia úloha skôr ako sa
+				animácia neprehrala celá. To najprv vyzeralo, ako elegantné riešenie môjho problému, o ktorom som si myslela, že použijem
+				aj na všetkých ďaľších tvorov. Ako som však postupovala, ukázalo sa, že toto riešenie tiež nefunguje úplne dokonale.
+				Mala som animáciu revu, ktorá mala v sebe notifikáciu, aby Animačný blueprint v správnom čase prehral zvuk a zavolal
+				funkciu efektu spojeného s touto animáciou - všetky tvory (a hráč) v dosahu sa na päť sekúnd nebudú môcť hýbať.
+				Ukázalo sa však, že keď animáciu spúšťam cez úlohu Play Animátion, tak sa notifikácia neodpáli. Preto som vytvorila
+				vlastnú úlohu, ktorá vezme SkeletalMesh vlkolaka a zavolá na ňom funkciu <strong>Play Montage</strong>, ktorú som 
+				doteraz používala na prehrávanie animácii. Keď animácia skončí, úloha skončí úspechom. Ak bude animácia prerušená (napr.
+				inou animáciou, ktorá sa prehrá ak bol tvor poranený), tak úloha tiež skončí, ale neúspechom. Toto riešenie mi dáva tú
+				istú výhodu, ktorú som sa snažila získať pomocou úlohy Play Animation a teda, že strom nepokračuje vo vykonávaní, kým
+				animácia neskončí a zároveň môžem používať notifikácie v animáciách. Takisto to vyriešilo problém, ktorý Play Animation
+				pre mňa neriešilo úplne dobre a to, ak animácia bola prerušená. Keď sa to stalo, vlkolak šiel na chvíľu do defaultnej
+				T-pózy pred tým, ako sa vrátil do idle státia. Toto tiež spôsobovalo nesprávne prehrávanie animácie úmrtia. Vytvorenie
+				vlastnej úlohy, pre mňa vyriešilo všetky tieto problémy a teda budem tento postup používať aj v na ďaľšie tvory. Ešte by
+				bolo dobré vyskúšať nejako sparametrizovať prehrávanú animáciu, aby som kvôli každej animácii nemusela vytvárať novú
+				úlohu.
+			</p>
+		<div>
+		</div>
 	</div>
 <my-footer></my-footer>
 </div>
