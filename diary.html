@@ -125,6 +125,7 @@
 				Potom to bolo už iba o doladení posledných detailov a kapitolu vlky pokladám za uzavretú.
 			</p>
 		</div>
+		<div>
 			<h4>3.3.2025</h4>
 			<p class="diaryEntry">
 				Od posledného zápisu som sa stretla zo školiteľom, kde sme sa porozprávali o mojom postupe na práci. Rozhodli sme sa, že
@@ -157,7 +158,36 @@
 				bolo dobré vyskúšať nejako sparametrizovať prehrávanú animáciu, aby som kvôli každej animácii nemusela vytvárať novú
 				úlohu.
 			</p>
+		</div>
 		<div>
+			<h4>9.3.2025</h4>
+			<p class="diaryEntry">
+				Na tento týždeň som si zvolila pracovať na havranovi. Teoreticky samotné správanie havrana nie je až také zložité.
+				Prechádza sa, keď sa zlakne, tak utečie a existujú veci, po ktorých útočí on. Od ostatných tvorov sa líši tým,
+				že reaguje na dva rôzne druhy návnad. To, že mám aj takýchto tvorov som si pri vytváraní základbej triedy neuvedomila
+				a tak som musela trošičku upraviť niektoré funkcie, tak, že pokiaľ má tvor zvolený ako druh návandy BP_BaseBait, teda
+				základnú návnadu, tak bude informovaný o všetkých návnadách v blízkosti a sám si vyberie, na ktoré bude reagovať.<br><br>
+				To čo však bolo na havranovi najzaujímavejšie bolo, že lieta. Pri implementácii lietania vzniká jeden trošičku ošemetný
+				problém. Unreal Engine vyrába navigáciu len na povrchoch, nie v celom 3D priestore. To znamená, že hoci Character 
+				Movement Component má druh pohybu let už predpripravený, v podstate to robí len to, že tvor prestane padať na zem.
+				Nedajú sa použiť predpripravené funkcie MoveTo a AIMoveTo na to, aby som tvora posunula niekam po vzduchu. Vytvorila som
+				teda dve úlohy pre rozhodovací strom: FlyTowardsActor a FlyTowardsLocation. Tieto úlohy využívajú funkciu 
+				<strong>AddMovementInput</strong>, ktorá sa bežne používa na pohybovanie hráčskej postavy a posúva postavu daným smerom.
+				Smer, ktorým sa chcem posunúť vypočítam ako KamSaChcemDostať - MojaPozícia. Keď havran nasleduje hráča, stačí to, že 
+				hráčova pozícia je niekde zhruba v strede hráčskej postavy, čo sa postará o to, aby havran lietal vo vhodnej výške.
+				Horšie bolo nájsť pozíciu, kam sa má havran posunúť, keď letí preč. Jeden spôsob, ako hladať toto miesto, ktorý mi
+				napadol, bolo nejako pomocou line-taring-u, ale keďže moje havrany nelietajú veľmi vysoko (zhruba 100 - 150 jednotiek nad
+				zemou) napadlo mi predsa len vyskúšať použiť navigáciu. Použijem podobnú funkciu pre nájdenie lokácie na útek, ako 
+				používam pri lani až na to, že súradnice, ktoré takto získam nepoužijem priamo ako cieľ. Namiesto toho si vypýtam náhodný
+				bod v blízkosti týchto súradnic na navigácii a tento bod posuniem o náhodnú hodnotu z rozsahu 100-150 hore po z-tovej osi.
+				Tak získam bod nad zemou, ku ktorému má havran letieť. Funguje to celkom pekne. Problém by mohol nastať, ak by som
+				v leveli mala nejaké levitujúce platformy, do ktorých by mohol vraziť, lebo na zemi by miesto voľné bolo a vo vzduch nie.
+				Takýchto miest však v leveli nie je veľa (možno jedine ak v dedine) a pomedzi stromi lieta pekne a aj smerom do kopca si
+				vie udržať dobrú výšku nad zemou.<br><br>
+				Okrem toho som ešte opravila jeden bug, ktorý som objavila. A síce, že sa tvor môže zaseknúť za prepokladu, že ho 
+				niečo viac krát po sebe dosť rýchlo udrie. Takisto som pridala pomalé doliečovanie tvorov, na ktorých nejaký čas nič 
+				neútočí a podobnú funkciu pre hráča, ktorá ho v prípade veľmi mála životov dolieči na jednu tretinu maximálneho počtu.
+			</p>
 		</div>
 	</div>
 <my-footer></my-footer>
