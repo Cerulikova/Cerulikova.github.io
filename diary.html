@@ -189,6 +189,59 @@
 				neútočí a podobnú funkciu pre hráča, ktorá ho v prípade veľmi mála životov dolieči na jednu tretinu maximálneho počtu.
 			</p>
 		</div>
+		<div>
+			<h4>17.3.2025</h4>
+			<p class="diaryEntry">
+				Tento týždeň bol dosť chaotický. Trochu odvážne som si povedala, že by bolo dobré pokúsiť sa zvýšiť tempo. Dala som
+				si preto  dve úlohy na týždeň. Vytvoriť tvora Barghest (vlkovitá príšera) a sfunkčniť navigáciu pre celý ostrov.
+				Takisto som chcela ešte opraviť drobné chyby v havranovi.<br><br>
+				Spomínané chyby v havranovi, ktoré som opravovala:
+				<ul>
+				<li>Havrany sa vystrašia navzájom - pridanie kontroli, aby havrany neodlietali po tom, čo sa k nim priblíži iný havran</li>
+				<li>Zničenie nesprávnej návnady - niekedy, keď boli dve návnady blízko seba sa stávalo, že havran prišiel k jednej
+				návnade, ale kým pri nej stál, zmenila sa mu v premenej Bait referncia na návnadu, ktorú má zjesť a tak bola zničená
+				nesprávna návnada</li>
+				<li>Nespawnovanie peria po zjedení návnady - Podľa rozhodovacieho stromu mal havran zjesť návnadu a potom s 
+				pravdepodobnosťou 4/10 mal vytvoriť pierko. Keďže však rozhodovací strom kontroluje či je návnada nadstavená a ak sa
+				pravdivosť tejto podmienky zmení vráti vykonávanie späť do vrcholu stromu, v momente, keď havran zjedol návnadu podmienka
+				prestala platiť. Rozhodovací strom sa zresetoval a ku spawnovaniu pierka nikdy nedošlo. Problém som vyriešila tým, že
+				som vytváranie pierka dala ešte pred zjedenie návnady.</li>
+				</ul>
+			</p>
+			<p class="diaryEntry">
+				Trochu som sa hrala s nastavením priesvitnosti materiálu na Barghestovi, keďže sa má vedieť zneviditeľniť, ale potom
+				som sa rozhodla, že radšej najskôr skúsim nadstaviť navigáciu a Barghestovi sa budem venovať potom. Ako sa však ukázalo,
+				tvorba navigácie bola viac časovo náročná ako som si myslela. V hernej mape bolo treba vyznačiť jednotlivé oblasti - 
+				dedina, lúka, les, pláž, hory, oceán. Vytvorenie všetkých NavModifierVolume-ov, ktoré slúžia na odlíšenie týchto oblastí
+				mi trvalo dva dni pričom mi UE znepríjemňoval život všemožnými spôsobmi. Ako som zistila, ak spravím jeden 
+				NavModifierVolume príliš veľký, navigácia ho bude ignorovať. Prečo? Len Pán Boh vie. Musela som preto vytvárať niekoľko
+				menších volumov pričom neraz sa mi stalo, že je volume, ktorý som vyznačovala 15 minút sa ukázal byť ešte stále príliš
+				veľký. Ďaľší problém bol bug v editore, ktorý spôsobuje, že vlastné NavArea triedy, ktoré nie sú defaultne v editore
+				sa nevyhodnocujú správne. NavArea v podstate určuje, aký druh oblasti NavModifierVolume označuje. Či je to prekážka,
+				priechodná oblasť, zakázaná oblasť alebo v mojom prípade dedina, les, lúka, atď. Bug robí to, že po vytvorení novej 
+				NavArea triedy, aj keď ju priradíte nejakému NavModifierVolume-u, navigácia ju odignoruje a bude sa tváriť, že je to
+				obyčajná priechodná zóna. Aby sa oblať správne vyhodnotila, je treba zmeniť číselnú hodnotu NavArei, ktorá určuje aká je
+				cena za prejdenie cez túto zónu a nechať nanovo vybuildovať navigáciu. Potom to už bude našťastie fungovať a číselnú
+				hodnotu triedy môžme kludne prepísať späť a čokoľvek, čo potrebujeme. Keď už boli jednotlivé zóny vytvorené, ostalo
+				len vytvoriť NavQueryFiltre, ktoré povedia každému tvorovi, do ktorej oblasti môže chodiť, ktorým sa má podľa možnosti
+				vyhnúť a ktoré sú úplne zakázané. To ako sa dá oblasť úplne zakázať som zistila len nedávno a ešte musím filtre
+				upraviť tak, aby tvori vôbec neliezli do vody, ale inak to už celkom funguje. Samozrejme, dali by sa robiť ešte úpravy.
+				Momentálne ak nejaký tvor pred niečím utéká alebo niečo naháňa, môže odísť aj z oblasti, v ktorej sa má nachádzať. To je
+				síce v poriadku, ale nič mu nekáže, aby sa po tom, čo prejde späť do idle stavu snažil vrátiť do svoje určnej oblasti.
+				Na teraz si túto funkcionalitu však asi nechám na dorobenie neskôr.<br><br>
+				A teraz najväčší problém týždňa. GitHub. GitHub dovolí nahrať len súbory, ktoré sú menšie ako 100MiB. A po nastavení
+				všetkých NavModifierVolume-ov moja herná mapa toto prekročila. Teda ak by som zmeny commitla už by mi ich GitHub nedovolí
+				pushnúť. Jej... -_- Takže, ako GitHub sám radil, nainštalovala som a rozchodila Git Large File Storage (Git LFS). Zdalo
+				sa, že je problém vyriešený a môžem ďalej v kľude robiť. Potom však prišiel mail z GitHubu, že som prekročila nejaké
+				limity pamäte pre Git LFS a že si mám dokúpiť ďaľšie. No, pekne. A čo teraz? Vidím asi tri možnosti. Prvá, povedať si
+				no dobre a tých 3,4 mesiace do konca akademického roka mu platiť za tú dodatočnú pamäť. Nie je to až taká katastrofa. A
+				potom nejako zmazať ten repozitár, aby už viac nepýtal. Druhá, počkať čo sa stane. Keďže hoci frfle, ďalej pushovať mi
+				zatiaľ nezakázal. A tretia je vykašlať sa na celý GitHub a robiť si zálohy poslednej funkčnej verzie niekde na kľúč. Ešte
+				som sa nerozhodla.<br><br>
+				No a tak skončil týždeň a k robenie Barghesta som sa vôbec nedostala. Takže sa z neho stáva úloha na nasledujúce dni.
+				Hneď po tom ako sa teda rozhodnem, čo s tým Gitom.
+			</p>
+		</div>
 	</div>
 <my-footer></my-footer>
 </div>
