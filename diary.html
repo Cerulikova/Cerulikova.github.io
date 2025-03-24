@@ -242,6 +242,47 @@
 				Hneď po tom ako sa teda rozhodnem, čo s tým Gitom.
 			</p>
 		</div>
+		<div>
+			<h4>24.3.2025</h4>
+			<p class="diaryEntry">
+				Len na úvod, rýchlo riešenie problému s GitHubom. Na GitHub zmeny už ďalej nepušujem. Commitujem do svojho lokálneho
+				repozitára a zálohu si s času na čas ukladám na externý disk.<br><br>
+				Takže plánom na tento týždeň bol Barghest. Včera som ho síce vyhlásila za hotového, ale teraz ako som ho písala do
+				beštiaru som si spomenula, že som mu zabudla spraviť reakciu na návnadu a celú tú vec s vlkolakmi. Ah, tá moja hlava
+				deravá! Ale zo zvyšok je už teda hotový. Prvá vec s Barghestom, ktorú som riešila bola, že som k nemu mala toho vlastne
+				dosť málo vymysleného. Vedela som, že sa má zneviditeľnovať a to bolo asi tak všetko. Teda potrebovala som mu vymyslieť
+				nejakú zaujímavú útočnú stratégiu. (Alebo teda aspoň zaujímavejšiu, než to, že sa po hráčovi proste vrhne). Nakoniec som 
+				vymyslela toto: Bude okolo hráča (alebo čohokoľvek na čo útočí) krúžiť a hráč musí sledovať kedy zaútočí. Funkciu na
+				získanie ďaľšieho bodu na kružnici so stredom na pozícii barghestovho cieľu sa mi podarilo napísať rýchlejšie ako som
+				čakala. Potom bolo už len treba vymyslieť, kedy sa má táto funkcia volať a o koľko sa má uhol otočenia zväčšovať medzi
+				jednotlivými volaniami. Najprv som uvažovalo o tom, že funkciu zavolám cez rozhodovací strom, vždy pred tým, ako sa
+				má barghest pohnúť. S týmto bol problém, že sa barghest posúval buď príliš pomaly alebo až veľmi kostrbato v závislosti
+				od veľkosti uhlu otočenia. Ako druhý pokus som sa rozhodla funkciu volať v event Tick pričom sa uhol otočenia zväčšuje
+				o jedna a zároveň aj posunúť barghesta na túto novú pozíciu. To spravilo takú divotvornú vec, že sa barghest zúrivo točil
+				na mieste. Napadlo mi, že to asi bude spôsobovať to, že sa posúvanie robí príliš často. Skúsila som volanie týchto
+				funkcií dať na dve rôzne miesta. Pozícia sa teda aktualizuje každý tik, ale neposunie barghesta, len aktualizuje hodnotu
+				v blackboarde a posúvanie sa robí v rozhodovacom strome pomocou MoveTo, ktoré má zaznačené Observe Blackboard Value.
+				Takto sa mi teda podarilo dostať plynulý pohyb na kružnici, pričom barghest prakticky okamžite reaguje na pohyb svojej
+				koristi. Drobná chyba krási tejto metódy sa ukázala v tom, že pri tomto spôsobe vlastne MoveTo nikdy neskončí, keďže
+				cieľová lokácia sa stále mení. MoveTo teda skončí jedine tým, že je prerušené kvôli zresetovaniu stromu vďaka nejakej
+				podmienke. Na toto som prišla, keď som sa snažila barghesta presvedšiť, aby z času na čas prestal krúžiť a na korisť aj
+				zaútočil. Chcela som, aby sa v rozhodovacom strome určovalo, či sa barghest posunie na novú pozíciu, alebo zaútočí, ale
+				kvôli nekonečnému MoveTo, ak sa už raz pohol, už len krúžil. Najprv som iba skúsila vypnúť Observe Blackboard Value, čo
+				vyriešilo problém neútočenia, ale za to som prišla o ten pekný plynulý pohyb. Barghest sa hýbal sekane a často narážal
+				do svojho cieľa. Preto som sa rozhodla nechať MoveTo bežať do nekonečna a do Blackboardu som pridala bool Attack, ktorá
+				v prípade, že je nastavená preruší MoveTo a barghest tak dostane šancu zaútočiť. Attack s nejakou šancou 0,3 nastavujem
+				v tiku pri výpočte novej cieľovej lokácie a po ukončení útoku ju zase vyčistím.<br><br>
+				Rýchlo ešte spomeniem, čo som skúšala do hernej mapy povkladať viac tvorov. Myslím, že som ich tam mohla podávať ešte
+				viac. Ale inak tento test dopadol celkom dobre. Nespadlo to, nepovyskakovali nijaké chyby a hra takmer vôbec nesekala.
+				Takže asi dobre. Mapa je dosť veľká na to, aby na seba jednotlivé tvory priveľmi nenarážali, takže si nemyslím, že by
+				sa mohlo stať, aby sa v nejakom momente všetci navzájom vyvraždili. Keď ich tam bude viac, samozrejme, že nastane viac
+				vzájomných interakcií, ale aj tak chcem nejako z času na čas povytvárať nových tvorov aj počas behu hry. Tak hádam to
+				bude vpohode. Zatiaľ mám z toho dobrý pocit.<br><br>
+				No a plán na najblížší týždeň. DOROBIŤ TIE VECI, ČO SOM ZABUDLA NA BARGHESTOVI a potom Gryf. Na toho sa fakt teším. Ten
+				síce zase lieta, z čoho až tak nadšená nie som, ale bude sa dať skrotiť a potom bude behať za hráčom a bojovať s ním.
+				Tak snáď sa mi to podarí aspoň na polovicu tak, ako si to predstavujem.
+			</p>
+		</div>
 	</div>
 <my-footer></my-footer>
 </div>
