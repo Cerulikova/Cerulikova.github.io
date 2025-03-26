@@ -271,7 +271,8 @@
 				vyriešilo problém neútočenia, ale za to som prišla o ten pekný plynulý pohyb. Barghest sa hýbal sekane a často narážal
 				do svojho cieľa. Preto som sa rozhodla nechať MoveTo bežať do nekonečna a do Blackboardu som pridala bool Attack, ktorá
 				v prípade, že je nastavená preruší MoveTo a barghest tak dostane šancu zaútočiť. Attack s nejakou šancou 0,3 nastavujem
-				v tiku pri výpočte novej cieľovej lokácie a po ukončení útoku ju zase vyčistím.<br><br>
+				v tiku pri výpočte novej cieľovej lokácie (EDIT: Attack sa nenadstavuje v ticku, ale vo funkcii, ktorá aktualizuje 
+				stav útoku) a po ukončení útoku ju zase vyčistím.<br><br>
 				Rýchlo ešte spomeniem, čo som skúšala do hernej mapy povkladať viac tvorov. Myslím, že som ich tam mohla podávať ešte
 				viac. Ale inak tento test dopadol celkom dobre. Nespadlo to, nepovyskakovali nijaké chyby a hra takmer vôbec nesekala.
 				Takže asi dobre. Mapa je dosť veľká na to, aby na seba jednotlivé tvory priveľmi nenarážali, takže si nemyslím, že by
