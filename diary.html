@@ -284,6 +284,40 @@
 				Tak snáď sa mi to podarí aspoň na polovicu tak, ako si to predstavujem.
 			</p>
 		</div>
+		<div>
+			<h4>31.3.2025</h4>
+			<p class="diaryEntry">
+			Takže, Barghest je doplnený a potom je tu Gryf. Dopadlo to lepšie ako som čakala. Hlávne body, na ktoré som sa pri gryfovi
+			zamerala, bolo lietanie a to, že si ho hráč vie skrotiť. Pri lietaní som nadväzovala na to, čo som vytvorila pri havranovi.
+			V podstate používam tie isté tasky na lietanie buď k nejakému bodu, alebo k nejakému actorovi, ale pridala som nejaké
+			kontroly vďaka, ktorím let gryfa vyzerá trochu prirodzenejšie. V prvom rade som pridala pravidelnú kontrolu pomocou
+			sphere trace, či niečo nie je pred gryfom. Ak sa teda stane, že do niečoho nabúra, zistím to a viem na to nejako reagovať.
+			Väčšinou tým, že si vyberiem novú pozíciu ku ktorej má gryf letieť. Takisto som chcela, aby mohol lietať vyšie nad zemou.
+			Havran je obmedzený na výšku 100-150 nad zemou, vzhľadom na to, ako si hladá novú pozíciu, ku ktorej má letieť. To je ale
+			prirodzene pre väčšieho tvora ako je gryf nedostačujúce. Gryf môže lietať až 4000 jednotiek na zemou a keď si vyberá 
+			novú cielovú pozíciu spraví najprv line trace priamo pod seba, čím získa súradnice na zemi pod sebou, od tejto pozície
+			si nájde novú náhodnú pozíciu na navigačnom meshi a tú zase odsunie o náhodnú hodnotu z rozsahu 1000 až 4000 hore po 
+			z-tovej osi. Posledné zásadné vylepšenie je pristávanie. Havran pristáva tak, že proste spadne. Takže, aby gryf nepadal
+			z tej 4000 jednotkovej výšky voľným pádom na zem, keď sa rozhodne, že chce pristať, nastaví sí flag. Tak bude vedieť, že pri
+			najbližšom výbere novej pozície ku ktorej má letieť, už nebude posúvať vybranú pozíciu smerom na hor. Tak priletí plynule
+			k zemi a prejde späť do kroku. Potom už len treba opraviť rotáciu. Keďže pri lietaní sa tvor vždy otáča tak, aby sa pozeral
+			kam letí, po doletení na zem z oblohy ostáva rotácia trochu naklonená, takže vždy pri pristátí treba vynulovať rotáciu po
+			y-ovej osi. Myslím, že od toho prvého pokusu lietania je to značný pokrok, ale ešte stále to nie je úplne dokonalé.
+			Lietanie a prístávanie síce vyzerá celkom v poriadku, ale prechod medzi chôdzou a lietaním vyzerá trochu vtipne. Hlavne
+			ak gryf vzlietava príliš strmo nahor. Hodilo by sa tam ešte trochu s tým pohrať, či by sa nejako lepšie nedali spraviť
+			animácie alebo ho nechať najskôr vyskočiť a až potom prejsť do letu, neviem. Ak vyjde čas, tak sa na to ešte pozriem.<br><br>
+			Druhá vec, ktorej som sa venovala bolo krotenie gryfa. V podtate toto samo o sebe nebolo náročné, len jedna funkcia. Ale
+			v súvislosti s tým tam pribudli nové veci, ktoré bolo treba podopĺňať. Hlavne nejakú komunikáciu medzi hráčom a gryfom a
+			potom ukladanie. Aby sa skrotený gryf uložil a po opätovnom načítaní hry znovu vytvoril. A samozrejme to, že skrotený gryf
+			sa chová inak ako neskrotený, čiže je to vpodstate dva v jednom.<br><br>
+			Ešte na záver, občas vyskakujú v Output logu chyby o tom, že keď si pýtal blackboard tak dostal None. V Gryfovi som už
+			teda pridala vždy pred zapisovaním do tabule kontrolu, či je referancia na tabuľu validná, teraz to "len" treba poprerábať
+			vo všetkých ostatných tvoroch. No a potom by som tento týždeň chcela pridať krokodíla (alebo krakena, ešte som sa nerozhodla,
+			musím pozrieť, ktorý z nich má lepšie animácie), ktorý bude plávať okolo ostrova. Vrámci toho by som chcela urobiť plávanie
+			aj hráčovi a asi konečne to ohraničenie sveta, aby mi ten krokodíl nevypadol. Uvídim koľko stihnem. Pomaly dochádza čas, mám
+			7 tvorov hotových, tak ešte aspoň troch, nech je ich 10.
+			</p>
+		</div>	
 	</div>
 <my-footer></my-footer>
 </div>
