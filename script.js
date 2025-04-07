@@ -21,7 +21,7 @@ class MyFooter extends HTMLElement{
 		<footer>
 			Vytvorila <strong>Mária Cerulíková</strong> v rámci predmetu Bakalársky seminár.<br>
 			<strong>Mail:</strong> cerulikova2@uniba.sk<br>
-			<strong>Posledne aktualizované:</strong> 31.3.2025<br>
+			<strong>Posledne aktualizované:</strong> 7.4.2025<br>
 			Obrázok na pozadí od <a href="https://pixabay.com/sk/users/aronvisuals-10427643/?utm_source=link-attribution&utm_medium=referral&utm_campaign=image&utm_content=8433585">Aron Visuals</a> z <a href="https://pixabay.com/sk//?utm_source=link-attribution&utm_medium=referral&utm_campaign=image&utm_content=8433585">Pixabay</a>
 			
 		</footer>`

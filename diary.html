@@ -317,7 +317,48 @@
 			aj hráčovi a asi konečne to ohraničenie sveta, aby mi ten krokodíl nevypadol. Uvídim koľko stihnem. Pomaly dochádza čas, mám
 			7 tvorov hotových, tak ešte aspoň troch, nech je ich 10.
 			</p>
-		</div>	
+		</div>
+		<div>
+			<h4>7.4.2025</h4>
+			<p class="diaryEntry">
+			Takže, od posledného zápisu som prešla postupne cez všetky tvory a všade pridala kontrolu, či je získaná referencia na tabuľu
+			validná. Od vtedy som už vyššie spomínanú chybu pri spúšťaní hry nepozorovala. Všimla som si však, že pokiaľ spúšťam hru
+			z hlavného menu je nejaký problém s hráčom. Asi sa nedobre uloží referencia na hráčšku postavu do premennej. Ešte som sa na
+			to nestihla bližšie pozrieť, keďže som na to prišla len včera pri pripravovaní prezentácie na Bakalársky seminár.<br><br>
+			Ďalej som spravila jednoduché ohraničenie sveta. Len kolízny box, ktorý pri prekrití s hráčom vypíše správu a druhý, ktorý
+			zabráni hráčovi, aby išiel ďalej. A potom som sa hrala s plávaním. Plávanie pre hráča bolo priamočiare podľa tutoriálu s
+			YouTube (link je na karte so zdrojmi). Trochu som sa zľakla, keď po tom čo som vytvorila blueprint pre oceán, mi z mapy
+			zmizla voda. Ale našťastie je to len nejaký drobný bug. Stačilo trochu pohnúť s aktorom, ktorý reprezentuje vodu na to, aby
+			sa to opäť umúdrilo. Potom to bolo už iba otravné, keď za každým, čo som zmenila niečo v blueprinte, voda zmyzla a musela
+			som to naprávať. Iný problém s vodou bol, keď som zistila, že nie uplne všade okolo ostrova je voda správne detekovaná.
+			V niektorých častiach ostrova plávanie fungovalo správne, v iných zase po skočení vody bolo síce počuť šplechnutie
+			(zvuk, ktorý som pridala pri skočení a vylezení z vody), ale prakticky okamžite sa postava prepla späť do chvôdze. Tieto 
+			miesta sa dali aj viditeľne odlíšiť. Časti, kde voda fungovala správne boli pod vodou pekne modré. V miestach, kde voda
+			nefungovala sa síce pri pohľade z hora nedalo nič rozoznať no po skočení do vody okolie ostalo rovnaké ako nad hľadinou. Iba
+			nad sebou sme mohli vidieť hladinu vody. Riešenie tohto zádrhelu som nakoniec našla na fóre. Water plugin, ktorý používam
+			je stále experimentálny a teda sa stáva, že sa v istých situáciách správa divne. Podľa istého komentáru platí, že čim je
+			aktor oceánu ďalej od bodu 0,0,0, tým viac problémov vzniká. Súradnicu z mám nadstavenú na 690 a tam ju aj potrebujem, keďže
+			to ovplyvňuje výšku hladiny a preto som ju nechala tak. Ostatné súradnice, som však vynulovala. Tie mali len nejaké náhodnéň
+			hodnoty asi od vtedy, čo som tohto aktora dotiahla do levla. Fungovalo to ako kúzlo a pokiaľ viem, už voda funguje správne v
+			celom leveli.<br><br>
+			Hlavnou udalosťou týždňa bol krokodíl. Keďže je možné, že to bol posledný tvor, ktorého stihnem implementovať, chcela som
+			si ešte vyskúšať spraviť to plávanie. Na moje mierne sklamanie to bolo až príliš podobné lietaniu. Aj tak som však rada, že
+			som ho spravila. Hlavnou myšlienkov krokodíla je, aby sa hráč príliš nemotal vo vode. Tam nič nie je, tam nemá čo loziť. 
+			Nechcem, aby sa príliš často dostal na kraj mapy. Ohraničenie sveta síce je, ale ideálne by ho hráč nemal vidieť. A práve
+			preto som uvažovala nad touto veľkou príšerov, ktorá sa nedá zabiť a dáva veľké poškodenie. Svoje plány som nakoniec
+			zmenila a krokodíl sa zabiť dá, ale má 1000 života a hráč dáva poškodenie 10 a zabije hráča na jedno kusnutie a postupne
+			sa doliečuje. Dúfam, že jasnejšie to už nemôže byť, že toto nie je to, čo by hráč mal robiť. Krokodíl je v hre len jeden a 
+			preto ešte plánujem zabezpečiť, že ak predsa len bude nejakým spôsobom zabití, vytvorí sa namiesto neho nový. Okrem toho
+			chcem ešte oskúšať, či nenastáva nejaká nepekná situácia pri niektorých viac nerovných častiach brehu. Či sa tam, krokodíl
+			niekde nezasekáva a či sa vie vždy dobre dostať k hráčovi.<br><br>
+			A tak sa dostávame na koniec môjho týždenného obkecu. Najbližší týždeň plánujem pracovať na dokončovacích prácach. Teda
+			ešte doladiť niektoré veci na gryfovi a krokodílovi, urobiť intro a koniec hry, pridať aspoň nejaký jednoduchý widget, kde
+			by bolo vysvetlené ovládanie, vyrobiť beštiár (ten je dosť dôležitý, tam sa asi ešte trochu zapotím kým urobím správne 
+			počítanie zabitých tvorov) a zabezpečiť povytváranie tvorov pri spustení levela a ich dopĺňanie v priebehu hry. Neviem, či
+			stihnem spraviť aj ukladanie existujúcich zvierat, keďže pravdepodobne to bude treba spraviť pre každý druh osobitne, ale
+			čo by som chcela určite stihnúť je spísanie všetkých použitých assetov, aby som náhodou niečo nezabudla kreditovať.
+			</p>
+		</div>
 	</div>
 <my-footer></my-footer>
 </div>
