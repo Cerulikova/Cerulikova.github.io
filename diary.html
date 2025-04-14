@@ -359,6 +359,85 @@
 			čo by som chcela určite stihnúť je spísanie všetkých použitých assetov, aby som náhodou niečo nezabudla kreditovať.
 			</p>
 		</div>
+		<div>
+			<h4>14.4.2025</h4>
+			<p class="diaryEntry">
+			Už to tento týždeň dokončím, myslela som si naivne...<br><br>
+			<strong>Keď voda sa odmieta chovať ako voda</strong><br>
+			Zistila som, že plávanie vôbec nefunguje. Najprv som si všimla, že ak po mne už krokodíl útočí a vybehnem z vody, začne sa tak 
+			nejak divne sekať. Podľa animácie to vyzeralo, že si prepol movement mod na walk, ale boolovská premenná Swimming ostala na
+			true, takže sa snažil vykonávať zlú časť rozhodovacieho stromu. Kým som sa to snažila opraviť, prišla som na to, že je
+			problém aj s hráčom. Niekedy po vylezení z vody síce prepol na animáciu chôdze, ale movment mod mu ostal na plávaní. A ešte
+			lepšie, niekedy som proste kráčala úplne mimo vody, keď zrazu sa prepol do plávania. Po niekoľkých hodinách pozorovania som
+			prišla na to, že hráč a krokodíl sa navzájom prepínajú. Ak je hráč na zemi a krokodíl vlezie do vody, aj hráč prejde do plávania.
+			Ak hráč vylezie z vody aj úbohý krokodíl vo vode začne kráčať.
+			<img src="obrazky/swimmingSystem1.png" alt="Swimming" title="eventy pre plávanie" width="600"><br>
+			Celý problém sa úkázal byť v tom ako som prepínala medzi plávaním. Na obrázku sú eventy, ktoré som volala, keď hráč vošiel do
+			vody (krokodíl mal podobné dva eventy). Ako môžme vidieť od Character Movement Componet-u si pýtam Physics volume a tomu 
+			nastavím, Water volume na true pri začatí plávania a false pri skončení. Teda či sa tento volume ma chovať ako voda. A toto
+			funguje pekne, do kým máme len jednu plávajúcu postavu. Totiž, pokiaľ nemáme v leveli vložený nijaký Physics volume, použije
+			sa defaultný. Teda ten, ktorý pokrýva celý level a hlavne spoločný pre všetkých aktorov. Práve preto si krokodíl a hráč
+			navzájom prepínali chôdzu a plávanie. A kto vie, či to niečo neblblo aj s ostatnými tvormi. Takže, systém plávania som musela
+			celý prerobiť. Snažila som sa hladať tutoriáli na YouTube, ale väčšina, čo som našla, to robila tak, ako ja doteraz. Nakoniec
+			som, ale našťastie našla niečo, čo mi pomohlo sa odraziť. Takže, krok jedna: Nastaviť Physics volume, ktorý bude pokrývať
+			celú oblasť, v ktorej sa dá plávať a jemu nastaviť Water Volume na true. Krok dva: povyhadzovať všetko čo netreba. Zbavila
+			som sa boolovských hodnôt, v ktorých som si pamäatala, či postava pláva. Namiesto nich môžem používať predpripravenú funkciu
+			IsSwimming. Z blueprintu oceánu som vyhodila volanie eventov z obrázka - ostala tam len logika na to, aby krokodíl začal
+			prenasledovať hráča. A tým pádom som sa zbavila aj samotných eventov. Physics volume sa sám postará o to, aby postavy začali
+			plávať, keď do neho vojdu. Okrem toho, že toto riešenie sa postaralo o môj problém, je aj elegantnejšie a ako bonus, mi
+			dovoľuje oddeliť začatie detekovania hráča vo vode a začatie plávania. Physics volume je o kúsok nižšie ako hladina vody,
+			takže postavy najprv možno meter vojdú do vody a až potom začnú plávať, čo vyzerá prirodzenejšie.<br><br>
+			<strong>Začiatok a koniec</strong><br>
+			K tomuto bodu nemám veľmi, čo písať. Vytvorila som widget, ktorý sa zobrazí pri spustení novej hry a obsahuje text, ktorý má
+			hráča trochu uviesť do deja. Potom som na najvyšší kopec v hre pridala diamand, ktorý má okolo seba kolízný box. Keď ho
+			hráč prvý krát objaví, dostane informáciu, že sem má prísť, keď bude mať všetko zozbierané. Potom sa pri každej ďaľšej
+			kolízii kontroluje, či hráč spĺňa podmienky na ukončenie hry. Ak áno, objaví sa okno, ktoré sa hráča spýta, či chce hru 
+			ukončiť. Ak si zvolí nie, pokračuje normálne ďalej v hre. V prípade, že zvolí áno,hra sa uloží a obajví sa rovnaký widget ako
+			na začiatku hry s textom, ktorý popisuje koniec príbehu. Potom sa má objaviť okno s kreditmi, kde by som chcela vypísať všetky
+			použité assety(toto ešte nie je hotové).Potom sa hra vráti na úvodnú obrazovku.<br><br>
+			<strong>Náhodné spawnovanie tvorov v svete alebo ako vás jedna boolean premenná môže stáť dva dni debugovania</strong><br>
+			Takže, ako ťažké môže byť naspawnovanie tvorov v levli pri spustení hry? Začala som s myšlienkou, že by som sa chcela
+			vyhnúť spawnerom. Celé vytváranie tvorov som chcela riešiť iba cez level blueprint. Keďže dom vedela, že niektoré tvory budú
+			potrebovať špeciálne podmienky na spawnovanie, rozhodla som sa každého tvora riešiť samostatne. Opäť som si za pokusného
+			králika zvolila ľaň a solu s ňou aj jeleňa, keďže majú byť spolu v stádach. Najprv som odstránila všetky inštancie laní a
+			jeleňov z levela a potom som napísala riadne pomotanú funkciu na ich náhodné povytváranie pri spustení levela. Myšlienka
+			bola asi tákáto - vyber náhodnú lokáciu pričom zohľadňuj navigačný filter, ktorý používa ľaň. Vygeneruj náhodné číslo - 
+			počet ľaní v stáde. Vyber nádodnú lokáciu a rotáciu pre jednotlivé ľane v stáde v blízkosti skúr vygenerovanej lokácie.
+			S pravdeposobnosľou 0,2 vystvor jeleňa. Inak vytvor ľaň. Opakuj kým nemáš dosť ľaní. Spustila som hru. Čakala som. Musela
+			som zavrieť Unreal Editor cez Správcu úloh, lebo inak to nešlo. Pár krát som tú funkciu prešla, či som tam vyrobila nekonečný
+			cyklus. Nenašla som ho, ale možno tam niekde bol. Vypla som počítač. Zjedla kus čokolády. Zapla som počítač a povedala si,
+			že predsa len idem robiť tie spawnre. Vytvorila som si nového aktora. Napísala som doňho funkcie na vytvorenie jednej lane,
+			jedného jeleňa v blízkosti danej lokácie. Tie potom využívam vo funkcie na vytvorenie stáda - vyberiem si náhodnú lokácie s
+			dosť veľkého radiusu a naspawnuj náhodný počet ľaní alebo jeleňov z rozsahu 5 - 15. Vráť počet spawnutých ľaní a počet
+			spawnutých jeleňov. Super. Konečne som na stačenie tlačítka vedela spawnúť stádo ľaní. Všetko sa zatiaľ zdalo v poraidku.
+			Vytvorila som v level blueprinte funkciu, ktorá si vyberie jeden zo spawnrov ľaní a jeleňov v leveli a spawne stádo.
+			Toto bude opakovať, kým počet ľaní v leveli neprekročí 60. Spustila som level a aspoň, že sa nikde nezasekol. Mala som však
+			iný problém - ľaní nikde. Naveľa-naveľa som našla zopár, ale určite ich nebolo 60. Takže, čo je zle? Spawnú sa príliš nízko
+			a prepadnú sa pod zem? Nie.Vytvoria sa mimo levela? Ani to nie. Oni v tom leveli totiž sú, len nie na tej lúke, kde mali
+			byť. Našla som ich na pláži, ako tam žerú piesok! A pár ich skákalo aj po kopcoch. Takže, hoci som pri výbere lokácií brala
+			do úvahy navigačný filter, ktorý ľane používajú, ten nutne nezakazuje oblasti mimo lúky. Len hovorí, aby sa im ľane vyhli
+			pokiaľ sa dá. Takže vytvorila som nový filter, ktorý sa bude používať pri spawnovaní. Tento má už výslovne povolenú iba 
+			lúku. Teraz by to už malo fungovať, však? Spustím level a ľane sú stále na dovolenke na pláži. Tak ja už neviem čo, vravím
+			si. Asi tá funkcia GetRandomLocationInNavigableRadius funguje inak, ako som si myslela. Hľadám tutoriáli, pátram v
+			dokumentácii. Nič. Pátram na druhý deň. Stále nič. Posledná zúfalá myšlienka - dať si vykreslovať debugovacie sféry, nech
+			vidím, kam tie ľane spawnuje a nemusím ich vždy hľadať. Spawnujú sa na strome............<br>
+			<img src="obrazky/doesAtTree.png" alt="Does at tree" title="kde sa ľane spawnli" width="600"><br>
+			Hľadala som ďalej. Ďalšie ľane sa opäť spawnli na pláži. Alebo skutočne? A teraz ide tá sľubovaná boolean hodnota s názvu
+			odseku. Tie ľane sa totiž nespawnli na pláži. A nespawnli sa ani na lúke. Spawnli sa na malom úseku defaultnej navigácie, kde
+			mi jednotlivé navigačné zóny nie úplne perfektne k sebe pasujú. A na strome sa spawnli preto, že aj na niektorých stromoch
+			je kde tu vygenerovaná navigácia a na tom jednom bol opäť kus defaultnej zóny. Totiž, keď som si vytvárala ten nový filter
+			na spawnovanie a zaznačovala som, ktoré oblasti majú byť zakázané, omylom som zakázala aj lúku. Takže chudák mohol spawnovať
+			len na tých útržkoch defaultenej navigácie, ktoré kde tu našiel. Nikdy ma neprestane udivovať, aké sprostosti som schopná
+			urobiť. Takže potom som dorábala spawnre pre všetky ostatné tvory okrem krokodíla, ktorého nechám v leveli napevno. Takže
+			tvory sa spawnujú. Je to dokonalé? Nie. Mohla som spraviť jeden druh spawnra, ktorý by mal rôzne funkcie na spawnovanie
+			rôznych tvorov? Áno, ale napadlo mi to až teraz ako to tu píšem. Takže mám pre každého tvora osobitný spawner. Do levela sa
+			spawne asi 300 tvorov a je to vidieť na FPS-kách, takže už vyššie asi nepôjdem. Snáď to bude hrateľné.<br><br>
+			Ešte rýchlo záver. Nestihla som spraviť respawnovanie tvorov, beštiár, kredity a obrazovku s ovládaním. To respawnovanie
+			je ešte taká posledná vec, ktorú považujem za nevyhnutnú. Ten beštiár by som tam strašne chcela. Možno hos kúsim nejako
+			pomaly dávať dokopy počas toho, čo budem písať prácu. No a už čo najskôr chcem napísať osnovu - nejaké približné body, o čom
+			chcem vlastne písať. A ako náhle bude to hotové, bude najvyšia priorita písanie práce.
+			</p>
+		</div>
 	</div>
 <my-footer></my-footer>
 </div>
