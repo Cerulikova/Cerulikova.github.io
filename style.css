@@ -19,6 +19,13 @@ h4{
 	clear:both;
 }
 
+summary{
+	color:#411e7a;
+	background-color: #d0a5c9;	
+	padding: 5px;
+	margin: 2px;
+}
+
 #content{
 	padding-left: 20px; padding-right: 20px;
 }
@@ -38,11 +45,11 @@ h4{
 	color:#FFFFFF;
 }
 .diaryEntry{
-	margin-left:10px;
+	margin-left:30px;
 }
 
 .creatureEntry{
-	*float:right;
+	float:right;
 	display:inline;
 	min-width:40%;
 	max-width:100%;
