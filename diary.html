@@ -17,8 +17,78 @@
 			<details>
 				<summary>22.2.2026</summary>
 				<p class="diaryEntry">
-					Prvé stretnutie so školiteľom bolo 19.2. Doporučil mi 4 články na čítanie. Dneská som si ich vytlačila a 
+					Prvé stretnutie so školiteľom bolo 19.2. Doporučil mi 4 články na čítanie (PDF v časti 
+					<a class="tutlink" href="resources.html">Zdroje</a>). Dneská som si ich vytlačila a 
 					začnem ich čítať.
+				</p>
+			</details>
+			<details>
+				<summary>24.2.2026 - CONAN</summary>
+				<p class="diaryEntry">
+					Cez výkend sa mi podarilo prečítať prvý článok <em>Let CONAN tell you a story: Procedural quest 
+					generation</em>. Nasledujú moje poznámky k tomuto článku.
+					<ul>
+						<li>CONAN - engine na generovanie questov</li>
+						<li><strong>Agenti (postavy)</strong> musia zadávať úlohy, ktoré nejakým spôsobom dávajú pre ne 
+							zmysel. (Sú v súlade s ich morálkou a zámermi)</li>
+						<li>CONAN to rieši tabuľkou prefernecií - čím vyššia cena úlohy, tým menej sedí tento typ úlohy 
+							danej postave
+						</li>
+						<li>Tri základné kategórie questov:<strong>place-oriented</strong> - dostaň sa niekam,
+							 <strong>time-oriented</strong> - splň danú podmienku za daný čas, preži dokým, ... 
+							 <strong> objective-oriented</strong> - splň daný cieľ</li>
+						<li>CONAN nedokáže generovať time-oriented quests - <strong>nepozná veličinu času</strong></li>
+						<li><strong>Svet</strong> = lokácie, postavy, predmety, <strong>Iniciálny stav</strong> = 
+							ich stav na začiatku hry</li>
+						<li>Questy sa generujú osobitne pre každú postavu</li>
+						<li>Striedanie kôľ: NPC a hráč
+							<ul>
+								<li>V kole NPC
+									<ul>
+										<li>pre každú postavu sa vygeneruje <strong>niekoľko cieľových stavov</strong>,
+											pre každý cieľ sa nájde lán -> vyberie sa ten quest s plánom s najnižšou cenou</li>
+										<li>vybraný quest postava prezentuje hráčovi</li>
+									</ul>
+								</li>
+								<li>V kole hráča
+									<ul>
+										<li>hráč vykoná akcie, ktoré ho dovedú k splneniu nejakého (alebo aj viacerých) quest</li>
+										<li>potom nastane nové kolo NPC</li>
+									</ul>
+								</li>
+							</ul>
+						</li>
+						<li>Nové questy sa generujú v každom kole
+							<ul>
+								<li>questy sa prispôsobujú aktuálnemu stavu sveta</li>
+								<li>questy z predchádzajúceho kola sú zahodené, aj keby sa ešte dali splniť??</li>
+							</ul>
+						</li>
+						<li>CONAN <strong>nedokáže postupne sťažovať questy</strong></li>
+						<li>Potrebujem nejako vedieť vyhodnotiť kvalitu generovných questov - tu rozdelenie questov do 
+							9 kategórií, zisťovanie, či generuje všetky
+						</li>
+					</ul>
+				</p>
+			</details>
+			<details>
+				<summary>3.3.2026 - Quest-GPT-2</summary>
+				<p class="diaryEntry">
+					Od posledného záznamu som prečítala článok <em>Generating Role-Playing Game Quests With GPT Language 
+					Models</em>. Nasledujú moje poznámky k tomuto článku.
+					<ul>
+						<li>Generovanie questov pomocou upraveného GPT-2</li>
+						<li>Výsledky neboli veľmi presvedčivé (questy nedávajú veľmi zmysel, zlá gramatika, chyby v rozlišovaní
+							postáv)</li>
+						<li><strong>Generuje LEN textový popis úlohy</strong> - nie samotný quest (ten dostane na vstupe)</li>
+						<li>Rozbitie questov na "ingrediencie" <br>
+							<img src="obrazky/ingrediencie_questu.png" alt="ingrediencie questu" title="ingrediencie questu" width="500px">
+						</li>
+						<li>Na rozdiel od CONAN generuje aj odmenu za questy</li>
+						<li>Nie len objektívne vyhodnotenie výsledkov podľa určených kritérií, ale aj hodnotenie reálnymi 
+							ľuďmi pomocou formulára
+						</li>
+					</ul>
 				</p>
 			</details>
 			<!--<details>
@@ -32,7 +102,7 @@
 		</div>
 		
 	</div>
-<my-footer class="shortPageFooter"></my-footer>
+<my-footer></my-footer>
 </div>
 
 </body>
