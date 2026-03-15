@@ -91,6 +91,118 @@
 					</ul>
 				</p>
 			</details>
+			<details>
+				<summary>15.3.2026 - Genetický algoritmus + plánovanie</summary>
+				<p class="diaryEntry">
+					Tento záznam sa týka článku <em>Procedural Generation of Quests for Games Using Genetic Algorithms and 
+					Automated Planning</em>. Zo všetkých článkov, ktoré som doteraz prečítala, asi môj najmenej obľúbený, lebo
+					sa strašne ťažko čítal a bolo mu náročné porozumieť. Zároveň je však jediný, ktorý doteraz zahŕňal aj 
+					implementáciu výsledného systému v reálnej hre. Nasledujú moje poznámky k tomuto článku.
+					<ul>
+						<li>Quest definuje ako postupnosť úloh, ktoré má hráč splniť</li>
+						<li>Generovanie questov v hernom svete s veľkým množstvom postáv, miest, predmetov a možných akcií, ktoré
+							môže hráč vykonať je náročné - využitie <strong>genetického algoritmu</strong> na efektívne hľadanie
+							vhodných questov
+						</li>
+						<li><strong>Genetický algoritmus</strong>
+							<ul>
+								<li>Využíva evolučné princípy na hľadanie optimálneho riešenia problému</li>
+								<li>Na začiatku má niekoľko náhodne vygenerovaných jednotlivcov populácie (tu questov)</li>
+								<li>Každého jednotlivca vyhodnotí pomocou <strong>Fitness funkcie</strong>, ktorá určí ako
+									dobre vyhovuje daným podmienkam
+								</li>
+								<li>Najlepší jednotlivci sú zvolení za rodičov novej generácie - z pomedzi najlepších sa vyberú
+									náhodní dvaja a znich sa pomocou <strong>crossover</strong> spraví nový jedinec (napr. vezme
+									sa polocica z jedného rodiča, druhá polovica z druhého rodiča a dá sa to dokopy), v nových
+									jedincoch môže nastať aj nejaká mutácia (niečo sa náhodne zmení, aj keď to rodičia nemali)
+								</li>
+								<li>Proces sa opakuje cez niekoľko generácií (v článku má jedna populácia 100 jedincov a 
+									algoritmus vytvorí 100 generácií) a po vytvorení daného počtu generácií sa z poslednej
+									generácie vyberie najlepší jedinec a ten je výsledkom algoritmu
+								</li>
+							</ul>
+						</li>
+						<li>V genetickom algoritme je quest reprezentovaný ako Q = (P, S<sub>0</sub>, G, O)
+							<ul>
+								<li>P - množina atómov, čo môže platiť (at(C,P), character(C), ...)</li>
+								<li>S<sub>0</sub> - iniciálny stav sveta, čo všetko platí na začiatku questu (charakter(john),
+									at(john, forest), ...)
+								</li>
+								<li>G - cieľový stav, čo musí platiť, aby bol quest splnený</li>
+								<li>O - operácie, akcie (meno, predpoklady, efekty), ktoré môžu byť vykonané nejakou postavou</li>
+							</ul>
+						</li>
+						<li>P a O sú rovnaké pre všetky questy v rovnakom hernom svete, S<sub>0</sub> a G určujú rozdielne
+							vlastnosti questov a preto je na ne v genetickom algoritme aplikovaný crossover a mutácia
+						</li>
+						<li>Jednotlivci pre iniciálnu populáciu sa generujú náhodne podla <strong>Domain Database</strong> - 
+						DB = (&Alpha;, &Beta;, &Gamma;, &Delta;, &Epsilon;)
+						<ul>
+							<li>&Alpha; - množina párov (obj, objType) - definuje všetky objekty v hernom svete a ich typy.
+								Napr. &Alpha; = {(john character), (forest, place), (antidote, item), ...}
+							</li>
+							<li>&Beta; - množina uzemnených literálov, ktorá popisuje <strong>vlastnosti a vzťahy</strong>
+								objektov v hernom svete, napr. &Beta; = {path(forest, village), alive(john), at(john, forest, ...)}
+							</li>
+							<li>&Gamma; - množina obmedzení, sú tri typy obmedzení
+								<ul>
+									<li>kontrola typu premenných - (cured, (character)) - cured má jeden predikát a ten musí byť
+										typu character
+									</li>
+									<li>kontrola protichodnosti - (healthy, infected (character)) - character nemôže byť súčasne 
+										healthy aj infected, ale niečo z toho musí byť
+									</li>
+									<li>kontrola jedinečnosti - (at, (character, &exist;!place)) - character sa môže nachádzať
+										len na jednom mieste súčasne
+									</li>
+								</ul>
+							</li>
+							<li>&Delta; - množina plánovacích operácií, všetky možné udalosti, ktoré môžu nastať</li>
+							<li>&Epsilon; - množina párov (o, tension) - aký má operácia o vlpyv na napätie questu</li>
+						</ul>
+						</li>
+						<li>Fitness Funkcia - hodnotí jednotlivé questy podľa toho ako sa ich štruktúra podobá troj-actovej
+							štruktúre (najprv je úvod s nižším napätím, potom nastane zápletka a napätie rastie až do 
+							vyvrcholenia, kedy nastane rozuzlenie a napätie klesá)
+						</li>
+						<li>Vygeneruje sa plán pre daný quest a potom podľa plánu sa určí ako veľmi sa priebeh questu podobá
+							 požadovanej štruktúré. Každá akcia má priradené v &Epsilon; či jej vykonaním napätie vzrastie (+),
+							 klesne (-), alebo ostane rovanké (=), potom numerická reprezentácia štruktúry questu, ktorej plán
+							 pozostáva z 6 akcíí môže vyzerať napr takto: {1,1,2,2,3,2}
+						</li>
+						<li>Fitness funkcia naškáluje štruktúru questu na rovnakú dĺžku, ako má požadovaná štruktúra a 
+							spraví ich rozdiel - čím menší rozdiel, tým lepší quest
+						</li>
+						<li>Beh genetického algoritmu je výpočtovo náročný - optimalizácie (paralelizácia výpočtov Fitness
+							funkcie pre jedincov jednej generácie, cashovanie štruktúr questov - ak je nejaký quest vo viacerých
+							generáciách, nemusíme znovu preň vytvárať plán)
+						</li>
+						<li>Testovanie v hre - v implementácii hry questy už nie sú reprezentované ako Q = (P, S<sub>0</sub>, G, O)
+							, ale ako plán akcií, ktoré musia nastať - toto znamená <strong>jediný možný spôsob, ako kvest
+							 dokončiť</strong>
+						</li>
+						<li>Vyhodnotenie
+							<ul>
+								<li>Porovnanie questov vygenerovaných pomocou genetického algoritmu a náhodne generovaných
+									questov
+								</li>
+								<li>Výpočtová náročnosť algoritmu - vygenerovanie 50 questov trvalo skoro 4 minúty</li>
+								<li>Turingovo testovanie - hráči dostali výslednu hru v ktorej boli tri generované questy a tri
+									questy vytvorené ľudskými dizajnérmi, po dokončení questu mal hráč rozhodnúť, či quest bol
+									generovaný alebo vytvorený človekom - hráči rozhodli správne približne v polovici prípadov,
+									teda generované questy sa dajú ťažko rozlíšiť od týých vytvorených človekom
+								</li>
+							</ul>
+						</li>
+						<li>S týmto prístupom mám taký problém, že generuje postupnosť questov, nie samostaný quest. Ak som
+							to správne pochopila, tak pri spustení hry sa na začiatku vygenerujú všetky questy tak, aby na seba
+							nadväzovali a potom hráč cez ne už len hrá. Toto zabezpečí iný playthrough pri každom spustení hry, ale
+							čo ak sa hráč nezachová podľa pripraveného plánu a napríklad zabije nejakú postavu skôr ako to hra 
+							zamýšlala? Táto postava potom môže pri neskorších questoch chýbať.
+						</li>
+					</ul>
+				</p>
+			</details>
 			<!--<details>
 				<summary>Testovací vstup</summary>
 				<p class="diaryEntry">
