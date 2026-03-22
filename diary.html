@@ -203,6 +203,107 @@
 					</ul>
 				</p>
 			</details>
+			<details>
+				<summary>17.3.2026 - Doran and Parberry</summary>
+				<p class="diaryEntry">
+					Takže, dočítala som článok <em>A Prototype Quest Generator Based on a Structural Analysis of Quests from Four
+					MMORPGs</em>. Tento článok bol spomínaný aj v článku o CONAN-ovi a aj myslím ešte v jednom z predchádzajúcich
+					článkov. Nasledujú moje poznámky k nemu.
+					<ul>
+						<li>Questy vo videohrách majú podobnú štrujktúru</li>
+						<li>Generátor potrebuje vedieť nie len vygenerovať quest, ale aj mať prostriedky na zistenie, kedy
+							quest vygenerovať a zabezpečiť, aby dával zmysel pre súčasný stav sveta
+						</li>
+						<li>Quest je <strong>špeciálnym prípadom plánovania</strong> - má počiatočný stav, cieľový stav a 
+							množinu akcií, ktoré hráč musí vykonať na to, aby quest dokončil
+						</li>
+						<li>Plánovací problém je NP-ťažky - potrebujeme stanoviť <strong>obmedzenia</strong>, aby sme 
+							zmenšili prehľadávací priestor
+						</li>
+						<li>Quety delí na 9 motivácií: Knowledge, Comfort, Reputation, Serenity, Protection, Conquest, Whealtj,
+							Ability, Equipment
+						</li>
+						<li>Zvolená motivácia musí <strong>dávať zmysel pre dané NPC</strong> a časom sa môže meniť (hlavne,
+							keď hráč dokončí quest pre NPC)
+							<ul>
+								<li>Toto úplne neviem ako je zabezpečené, keďže neskôr píšu, že motivácia sa náhodne generuje</li>
+							</ul>
+						</li>
+						<li>Každá motivácia má 2 - 7 <strong>stratégií</strong>
+							<ul>
+								<li>Každá sztratégia pozostáva z 1 - 6 akcií, ktoré hráč musí vykonať</li>
+							</ul>
+						</li>
+						<li>Akcia je buď <strong>jednoduchá atomická akcia</strong> alebo môže byť <strong>rekurzívne vyjadrená
+							ako sekvencia akcií</strong> (môže sa vetviť na ďalšie akcie)
+							<ul>
+								<li>Akcie môžu byť vyjadrené pomocou stromov - listy = atomické akcie, vnútorné vrcholy = vetvia
+									sa na podakcie
+								</li>
+							</ul>
+						</li>
+						<li>Akcie sa môžu rozširovať podľa pravidel daných <strong>bezkontextovou gramatikou</strong></li>
+						<li><strong>Akcia môže byť prázdna</strong> (napr. akcia &lt;learn&gt; ::= &lt;goto&gt; &lt;subquest&gt; 
+							listen - hráč nemusí zakaždým dostať subquest alebo ak už je na správnom mieste, tak goto bude 
+							prázdna akcia
+						</li>
+						<li><strong>Generovanie questu</strong>
+							<ul>
+								<li>Na začiatku potrebujeme zvoliť náhodnú <strong>motiváciu</strong> pre NPC a <strong>
+									seed</strong> pre Generátor
+									<ul><li>rovnaký seed + motivácia = rovnaký quest</li></ul>
+								</li>
+								<li>Náhodne sa vygeneruje jedna <strong>stratégia</strong> pre danú motiváciu => dotsaneme
+									počiatočnú <strong>sekvenciu akcií</strong>
+								</li>
+								<li>akcie, ktoré nie sú atomické rekurzívne rozvíjame
+									<ul>
+										<li>Rozhodnutie, kedy sa akcia rozvinie (a ako) a kedy je atomická sa vykoná na základe
+											<strong>predpokladaných znalostí hráča a aktuálnom stave herného sveta</strong>
+										</li>
+										<li>Napr. generátor nepošle hráča zozbierať niečo, čo už má alebo nebude predpokladať,
+											že vie niečo, čo sa ešte nemal ako dozvedieť
+										</li>
+									</ul>
+								</li>
+								<li><strong>Špecifické detaily</strong> (mená postáv, predmety, miesta) sa dosádzajú počas toho,
+									čo sa strom rozširuje => strom s rovnakou štruktúrou v závyslosti od detailov popisuje iný 
+									quest
+								</li>
+							</ul>
+						</li>
+						<li>Generátor je napísaný v PROLOG</li>
+					</ul>
+				</p>
+			</details>
+			<details>
+				<summary>22.3.2026</summary>
+				<p class="diaryEntry">
+					Tento štvrtok som bola na stretnutí zo školiteľom, kde sme vybrali ešte tri články, o ktorých si myslíme, že
+					by mohli byť užitočné. Takisto sme sa rozprávali o článkoch, ktoré som doteraz prečítala. Výstup je asi
+					nasledovný. Prístup s GPT modelom sme zamietli. Tento prístup generuje len textový popis questu, nie samotný
+					quest a okrem toho výsledky, ktoré boli v článku dosiahnuté nevyzerali veľmi presvečivo. Prístup s genetický
+					algoritmom je zaujímavý, ale to, že sa všetky questy vygenerujú na začiatku hry sa mi nepozdáva a okrem
+					toho sú výstupom questy v podobe presnej postupnosti krokov, čo našemu zámeru, aby sa dali questy plniť rôznymi
+					spôsobmi nevyhovuje. Postup v poslednom článku, ktorý som čítala, kde sa questy generujú pomocou bezkontextovej
+					gramatiky ako stromy sa mi síce veľmi páči, ale tiež neviem prísť na spôsob, ako by sa toto riešenie dalo
+					rozvynúť do questov s viacerými riešeniami. Tak mi ostal prvý článok o CONAN-ovi. Toto sa mi zdá, že by sa asi 
+					najlepšie dalo rozvynúť a prispôsobiť našemu zámeru. Sú tam isté problémy, ktoré v súvislosti z viacerými riešeniami
+					questov budeme musieť nejak ošetriť, ale v podstate CONAN považuje za quest len cieľový stav sveta, do ktorého sa
+					hráč musí dostať a do toho stavu, by sa teoreticky mohlo dať dostať viacerými spôsobmi, čo je podľa mňa práve to, čo
+					potrebujeme.<br><br>
+					Avšak, pred tým ako sa sto percentne rozhodnem, pre tento prístup, chcem si prečítať tie nové tri články, ktoré sa 
+					práve venujú vetviacim sa a nelineárnym questom, čo by mi mohlo ponúknuť nejaké nové nápady, ako by som mohla generovať
+					questy, ktoré dovolia hráčovi zvoliť si, ako quest dokončí.<br><br>
+					Tým sa dostávame k plánu na najbližšie týždne. Do 15.5. ostáva menej ako osem týždňov, takže aby som všetko
+					stihla treba približne dodržať nasledovné:
+					<ul>
+						<li>Prečítať 3 články - 2 týždne</li>
+						<li>Naprogramovať prototyp - 4 týždne</li>
+						<li>Pripraviť odovzdanie na Projektový seminiár - 1 týždeň (+ 4 dni)</li>
+					</ul> 
+				</p>
+			</details>
 			<!--<details>
 				<summary>Testovací vstup</summary>
 				<p class="diaryEntry">
