@@ -304,6 +304,97 @@
 					</ul> 
 				</p>
 			</details>
+			<details>
+				<summary>30.3.2026 - Genetický algoritmus + Vetviace sa questy</summary>
+				<p class="diaryEntry">
+					Takže, dočítala som ďalší článok. Volá sa <em>Procedural generation of branching quests for games</em>. 
+					Tento článok nadväzuje na článok o genetickom algoritme, ktorý som čítala skôr. Rozvíja ho a mení tak,
+					aby bolo možné generovať questy s rôznymi koncami. Nasledujú moje poznámky:
+					<ul>
+						<li>Rozvetvené questy - quest definovaný ako <strong>stromová štruktúra</strong></li>
+						<li>Game Tree &Omega;
+							<ul>
+								<li>Strom všetkých questov v hre (jeho vrcholy sú quest)</li>
+								<li>Ak quest má 3 rôzne konce, tak v &Omega; má troch potomkov (3 iné questy, ktoré nadväzujú
+									na každý jeho koniec)
+								</li>
+							</ul>
+						</li>
+						<li>Quest je strom
+							<ul>
+								<li>Je rozdelený na <strong>podciele</strong></li>
+								<li>Z iniciálneho stavu sa môžeme dostať do niekoľkých podcieľov</li>
+								<li>Podcieľ, do ktorého sa dostanem je iniciálnym stavom pre ďalších n podcieľov ...
+									pokračujem, až sa dostanem do niektorého z finálnych cieľov
+								</li>
+								<li>Každá časť z jedného vrcholu do druhého je <strong>osobitný plánovací problém</strong></li>
+							</ul>
+						</li>
+						<li>Rozšírenie obmedzení od predchádzajúcej práce
+							<ul>
+								<li>r<sub>j</sub> - v predikáte označíme nejaký term ako dôležitý - chceme, aby sa tento predmet
+									vyskytoval aj v ďalších vetvách pod touto vetvou. Napr. 
+									<em>request(character, character, ?item, place)</em> -> ak nejaká postava chce od inej postavy
+									nejaký predmet, tak by sa ten predmet mal vyskytovať v nasledujúcich krokoch úlohy.
+								</li>
+								<li>qualif<sub>i</sub> - či predikát pred<sub>i</sub> môže byť pridaný do iniciálneho alebo 
+									cieľového stavu bez porušenia logiky sveta. Napr. quest môže spawnuť nepriateľov alebo nejaké
+									predmety potrebné pre quest bez toho, aby to v hernom svete nedávalo zmysel
+								</li>
+								<li>motif<sub>i</sub> - ktoré predikáty majú podobnú štruktúru. Sú kandidátmi na to, aby boli 
+									súčasťou alternatívnych podcieľov questu. Napr. či sa predikát týka zbierania predmetov alebo
+									bojovaniu s nepraiteľmi
+								</li>
+							</ul>
+						</li>
+						<li>Generovanie iniciálnej populácie pre genetický algoritmus
+							<ol>
+								<li>Vygenerujeme <strong>quest-giver</strong>-a (zadávateľa úlohy) - náhodná postava z existujúcich
+									postáv v hre
+								</li>
+								<li>Vygenerujeme <strong>motív</strong> (motif<sub>i</sub>) - náhodný z existujúcich</li>
+								<li>Vygenerujeme jednotlivca - iniciálny stav = stav sveta + niekoľko náhodne vygenerovaných
+									predikátov, vygenerujeme niekoľko cieľových stavov (napr. 1 - 3), rieši sa plánovací problém
+									z iniciálneho stavu do každého cieľového stavu (ak plán neexistuje, cieľ sa zahodí), opakujeme
+									pre každý vzniknutý cieľový stav, do kým nemáme dostatočne vysoký strom
+								</li>
+							</ol>
+						</li>
+						<li>Crossover
+							<ul>
+								<li>Vyberieme dvoch jedincov na crossover</li>
+								<li>Nájdeme <strong>kompatibilné vrcholy</strong>
+									<ul>
+										<li>P<sub>1</sub>S<sub>i</sub> &#8596; P<sub>2</sub>S<sub>j</sub>
+											- potomkov stavu i z prvého rodiča vieme zavesiť na stav j z druhého rodiča a naopak
+										</li>
+										<li>P<sub>1</sub>S<sub>i</sub> &larr; P<sub>2</sub>S<sub>j</sub>
+											- potomkov zo stavu na pravo môžeme zavesiť pod stav na ľavo
+										</li>
+										<li>P<sub>1</sub>S<sub>i</sub> &rarr; P<sub>2</sub>S<sub>j</sub>
+											- potomkov zo stavu na ľavo môžeme zavesiť pod stav na pravo
+										</li>
+									</ul>
+								</li>
+								<li>Nekompatibilné vrcholy sa len prekopírujú do nového jedinca, na kompatibilných sa podľa typu
+									vymenia potomkovia
+								</li>
+							</ul>
+						</li>
+						<li>Fitness Function
+							<ul>
+								<li>Hľadá story arc podobný danej štruktúre</li>
+								<li>Pre každú cestu v strom questu vyráta ako dobre sa zhoduje s danou štruktúrov a spraví priemer
+									pre celý quest
+								</li>
+								<li>Okrem story arc môže brať do úvahy ďaľšie parametre ako napríklad, počet opakovaných
+									výskytov dôležitých predmetov, výšku stromov questov, ...
+								</li>
+							</ul>
+						</li>
+					</ul>
+				</p>
+			</details>
 			<!--<details>
 				<summary>Testovací vstup</summary>
 				<p class="diaryEntry">
