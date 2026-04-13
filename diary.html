@@ -395,6 +395,115 @@
 					</ul>
 				</p>
 			</details>
+			<details>
+				<summary>7.4.2026 - Posledné dva články</summary>
+				<p class="diaryEntry">
+					Posledné dva články mám dočítané. Prvý, <em>Non-Linear Quest Generation</em>,  bol síce krátky, ale veľmi
+					náročný na čítanie.
+					<ul>
+						<li>Quest je reprezentovaný hypergrafom</li>
+						<li>Akcia = pár(sloveso, podstatné meno)</li>
+						<li>Obmedzenia
+							<ul>
+								<li>Máme množinu slovies a množinu podstatných mien</li>
+								<li>Každé slovo je buď <em>living</em> alebo <em>static</em></li>
+								<li>Statické sloveso môže byť spojené len so statickým podstatným menom a living len s living</li>
+								<li>Statické podstatné mená sa delia na objekty a lokácie</li>
+							</ul>
+						</li>
+						<li>Hyper node - viac akcií - tieto môžu byť vykonané v ľubovoľnom poradí</li>
+						<li>Najprv sa vygeneruje lineárny quest a potom sa hľadajú miesta na paralené rozšírenie</li>
+					</ul>
+					Druhý článok je <em>A Pattern Catalog for Computer Role-Playing Games</em>. Tento článok sa nevenuje
+					generovaniu questov, ale na rozdiel od predchádzajúcich článkov, rozoberá bližšie aj implementáciu svojho
+					výsledku do skutočnej hry.
+					<ul>
+						<li>Vo videohrách je potrebné naprogramovať interakcie medzi veľkým množstvom objektov a postáv</li>
+						<li>Tento článok sa venuje vytvoreniu systému, ktorý umožní dobre formálne definovať tieto interakcie,
+							aby sa zabránilo chybám pri komunikácii medzi dizajnérmi a programátormi
+						</li>
+						<li>Takisto je možné kód pre interakcie generovať pomocou návrhových vzorov (dizajnér si to vie vyklikať
+							bez zásahu programátora)
+						</li>
+						<li>Ecistujú 4 typy návrhových vzorov: <strong>encounter</strong>(interakcia medzi PC a nejakým neživým
+							objektom), <strong>dialog</strong>(rozhvor medzi PC a NPC), <strong>behaviour</strong>(ako sa má nejaké
+							NPC správať - čo má kedy robiť), <strong>plot</strong>(progresovanie cez quest)
+						</li>
+						<li>Dôležité pre našu prácu
+							<ul>
+								<li>hráč postupuje cez quest v sérii stavou: nepriradený, priradený, vyriešený, uzavretý</li>
+								<li>Je vhodné programovať generátori niečoho tak, aby sa dali dobre nastaviť pre konkrétnu hru,
+									v ktorej ich chceme použiť (aby sa to dalo ľahko prenášať do viacerých hier)
+								</li>
+							</ul>
+						</li>
+					</ul>
+				</p>
+			</details>
+			<details>
+				<summary>Záver "výskumu"</summary>
+				<p class="diaryEntry">
+					<ul>
+						<li>Questy sa dajú dobre reprezentovať pomocou <strong>výrokovej logiky</strong>(predikátov a operácií)
+							<ul>
+								<li>Quest má <strong>počiatočný stav</strong> a <strong>cieľový stav</strong></li>
+								<li>Či je quest splniteľný a aké akocie musí hráč vykonať zistíme riešením plánovacieho 
+									problému
+								</li>
+							</ul>
+						</li>
+						<li>Ak chceme questy s alternatívnymi riešeniami, je dobré questy rozdeliť na podčasti
+							<ul>
+								<li>Z iniciálneho stavu sa viem dostať do niekoľkých medzistavov a z každého medzistavu buď do 
+									ďalšieho medzistavu, alebo do cieľového stavu
+								</li>
+							</ul>
+						</li>
+						<li>Ako generovať stavy?
+							<ul>
+								<li><strong>Genetický algoritmu</strong> - asi najpresnejší, ale výpočtovo náročný, v článkoch
+									použitý na generovanie offline
+								</li>
+								<li><strong>CONAN</strong> - náhodne generuje predikáty, dosadí parametre (náhodne podľa
+									 obmedzení), vyberie predikát, ktorého plán najlepšie spĺňa kritériá - quest je len jeden
+									 predikát (možno by sa dalo rozšíriť na množinu predikátov)
+								</li>
+								<li><strong>Rekurzívne pomocou bezkontextovej gramatiky</strong> - rekurzívne generuje celý
+									quest (nemá cieľové stavy) -> nevieme rozdeliť na medzistavy
+								</li>
+							</ul>
+						</li>
+					</ul>
+					<br>
+					<ul>
+						<li><strong>Čo chceme, aby naša práca spĺňala</strong>
+							<ul>
+								<li>Ako metódu na genrovanie questov sme zvolili genetcký algoritmus</li>
+								<li>Questy budeme generovať offline, nie počas hry</li>
+								<li>Quest môže pri prijatí hráčom vytvoriť nejaké predmety alebo nepriateľov</li>
+								<li>Hráč by mal mať naraz k dispozícii viac questov - nechcem len jednu dejovú líniu, viac sa mi
+									páči jak CONAN má questy pre každú postavu (quest-givera) zvlášť
+								</li>
+								<li>Hra musí kontrolovať, či je quest splniteľný - ak z nejakého dôvodu sa niektorí quest stane
+									nesplniteľným (napr. hráč zabije postavu potrebnú pre daný quest), tak to treba ošetriť (buď
+									nahradiť nasledujúcim questom, alebo odstrániť)
+								</li>
+							</ul>
+						</li>
+					</ul>
+				</p>
+			</details>
+			<details>
+				<summary>13.4.2026</summary>
+				<p class="diaryEntry">
+					Je najvyšší čas začať pracovať na prototype. Keďže sme sa rozhodli ísť cestou plánovacieho problému, ako prvé
+					potrebujem nejaký plánovač. Najprv som chcela používať HSP2 heuristic search planner, ktorý bol spomínaný
+					v článku o genetickom algoritme. Ten sa mi však nepodarilo rozchodiť. Problémom bolo asi to, že plánovač nebol
+					15 rokov aktualizovaný a nové gcc sa mu nepáčilo. Rozhodla som sa preto siahnuť po inom plánovači: Fast
+					Downward, ktorý som si pripravila na svojom počítači. V súčasnosti sa snažím pripraviť malú testovaciu doménu
+					a zakádovať ju do formátu pddl pre tento plánovač.
+				</p>
+			</details>
 			<!--<details>
 				<summary>Testovací vstup</summary>
 				<p class="diaryEntry">
