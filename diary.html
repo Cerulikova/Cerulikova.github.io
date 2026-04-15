@@ -504,6 +504,29 @@
 					a zakádovať ju do formátu pddl pre tento plánovač.
 				</p>
 			</details>
+			<details>
+				<summary>15.4.2026 - Vytvorenie domény herného sveta</summary>
+				<p class="diaryEntry">
+					Ako som spomínala. Snažila som sa vytvoriť testovaciu doménu reprezentujúcu jednoduchý herný svet. Rozhodla
+					som sa využiť elementy z hry The Hopper, ktorú som naprogramovala v rámci bakalárskej práce. Formát pddl
+					definuje plánovací problém pomocou dvoch súborov. Prvý súbor je doména, ktorá obsahuje typy premenných, 
+					predikáty a možné akcie. Takisto sa dajú definovať axiómy pomocou symbolu :derived. Druhý súbor sa nazýva 
+					problém, ktorý obsahuje informácie špecifické pre daný problém - objekty dôležité pre tento problém, 
+					iniciálny stav a cieľový stav. Na testovanie som vytvorila doménu 
+					<a class="tutlink" href= "files/hopperDomain.pddl"><em>hopperDomain.pddl</em></a>
+					 a problém <a class="tutlink" href= "files/hopperKillWarewolf.pddl"><em>hopperKillWarewolf.pddl</em></a>.
+					 <br><br>
+					 Vytvorenú doménu som prispôsobila tak, aby sa podľa nej dali vytvárať plány podobné postupu hráča pri plnení
+					 úlohy. Doménu budem možno v budúcnosti dopĺňať o ďalšie predikáty a akcie. V súbore
+					 <a class="tutlink" href= "files/Vytvaranie_domeny_poznamky.txt"><em>Vytvaranie_domeny_poznamky.txt</em></a>
+					 je spísané ako som dolaďovala doménu na základe plánov, ktoré pre problém <em>hopperKillWarewolf.pddl</em>
+					 vracala.
+					 <br><br>
+					 Na záver tohto záznamu treba ešte dodať, že som narazila na problém súvisiaci s PDDL a Fast Downward. A to
+					 síce taký, že sa nedá jednoducho hľadať ďalšie plány tak, že zakážem získaný plán. Toto je nepríjemné, keďže
+					 celá naša práca je zameraná na hľadanie alternatívnych riešení.
+				</p>
+			</details>
 			<!--<details>
 				<summary>Testovací vstup</summary>
 				<p class="diaryEntry">

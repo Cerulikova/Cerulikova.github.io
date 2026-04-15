@@ -1,0 +1,79 @@
+1. Spustiteľný pokus:
+	(give hunter hopper sword village)
+	(go warewolf meadow village)
+	(attack_character hopper warewolf village)
+	(kill hopper warewolf village)
+	; cost = 4 (unit cost)
+ * nie je potrebné, aby meč bol oravený
+ * vlkolak prišiel do dediny
+ * vlkolak nemôže útočiť - problém s predikátom can_attack
+
+2. Spustiteľný pokus:
+	(go shopkeeper shop village)
+	(give hunter shopkeeper sword village)
+	(go warewolf meadow village)
+	(fix_item shopkeeper sword metal)
+	(give shopkeeper hopper sword village)
+	(attack_character hopper warewolf village)
+	(kill hopper warewolf village)
+	; cost = 7 (unit cost)
+ * Takže shoppkeeper všetko porobí a potom dá hráčovi meč a ten zabije vlkolaka
+ * Toto nie je dobrá štruktúra priebehu úlohy
+
+3. Spustiteľný pokus:
+	(give hunter hopper sword village)
+	(go hopper village shop)
+	(give hopper shopkeeper sword shop)
+	(fix_item shopkeeper sword metal)
+	(give shopkeeper hopper sword shop)
+	(go hopper shop village)
+	(go hopper village meadow)
+	(attack_character hopper warewolf meadow)
+	(kill hopper warewolf meadow)
+	; cost = 9 (unit cost)
+ * Zakázala som pohyb iných postáv než hráča
+ * Toto sa už podobá na validný priebeh questu, aj keď som chcela, aby si hráč musel kupiť materiál na opravu
+
+4. Spustiteľný pokus:
+	(attack_character warewolf warewolf meadow)
+	(kill warewolf warewolf meadow)
+	; cost = 2 (unit cost)
+ * Napísala som pravidlo, podľa ktorého všetci monsteri môžu útočiť
+ * Teraz vlkolak zabije sám seba, aký to pekný svet!
+
+5. Spustiteľný pokus:
+	(give hunter hopper sword village)
+	(go hopper village shop)
+	(give hopper shopkeeper sword shop)
+	(fix_item shopkeeper sword metal)
+	(give shopkeeper hopper sword shop)
+	(go hopper shop village)
+	(go hopper village meadow)
+	(attack_character hopper warewolf meadow)
+	(kill hopper warewolf meadow)
+	; cost = 9 (unit cost)
+ * Pridala som kontrolu nerovnosti postáv v akciách, v ktorých interagujú dve postavy (okrem cure - vyliečiť
+   môžeš aj sám seba)
+ * Dostali sme sa k riešeniu číslo 3 a tu je problém, ono to vlastne dáva zmysel z hľadiska hrateľnosti,
+   ale z hľadiska predavača nie - ochotne opraví hráčovi meč a ani si za to nepýta zlatý peniaz, ktorý by
+   dostal, ak by hráčovi len predal materiál na opravu.
+ * Uvažujem dve môžnosti - pridať predikát (seller ?ch) a pravidlo, že predajca blokuje všetko, čo má
+                         - pridať predikát (can_fix ?who ?what) - kto vie, čo opraviť - predavač meče neopravuje
+
+6. Spustiteľný pokus:
+	(go hopper village shop)
+	(exchange shopkeeper hopper metal gold_coin shop)
+	(go hopper shop village)
+	(give hopper hunter metal village)
+	(fix_item hunter sword metal)
+	(give hunter hopper sword village)
+	(go hopper village meadow)
+	(attack_character hopper warewolf meadow)
+	(kill hopper warewolf meadow)
+	; cost = 9 (unit cost)
+ * Zvolila som možnosť cez predikát can_fix, keďže napísanie implikácie ak si seller tak blokuj všetko čo máš,
+   by mi zakázalo explicitne písať blokovanie do problému a to nechcem
+ * Toto je riešenie, ktoré som si pre tento quest predstavovala
+ * Vzhľadom na veľkosť množiny prvkov v probléme, asi neexistujú zasadne rôzne riešenia tohto questu
+
+
