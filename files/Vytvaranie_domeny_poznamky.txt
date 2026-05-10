@@ -76,4 +76,75 @@
  * Toto je riešenie, ktoré som si pre tento quest predstavovala
  * Vzhľadom na veľkosť množiny prvkov v probléme, asi neexistujú zasadne rôzne riešenia tohto questu
 
+*************************************************************************
+Riešim problém hľadania viacerých riešení
+Pridala som predikáty current(?i - number) a next(?i - number ?j - number), ktoré definujú čísla.
+Pridala som nový typ pre každú akciu, aby každá mala svoje unikátne ID.
+Každá akcia zväčší číslo a nastaví predikát order(?id ?i) - akcia id bola vykonananá v i-tom kole
+Dostanem riešenie:
+	(go hopper village shop o_go n0 n1)
+	(exchange shopkeeper hopper metal gold_coin shop o_exchange n1 n2)
+	(go hopper shop village o_go n2 n3)
+	(give hopper hunter metal village o_give n3 n4)
+	(fix_item hunter sword metal o_fix_i n4 n5)
+	(give hunter hopper sword village o_give n5 n6)
+	(go hopper village meadow o_go n6 n7)
+	(attack_character hopper warewolf meadow o_attack_ch n7 n8)
+	(kill hopper warewolf meadow o_kill n8 n9)
+	; cost = 9 (unit cost)
+ * teraz viem zakázať toto riešenie pomocou order predikátov
+ * Prepis do order:
+		(not (and 
+			(order o_go n0)
+			(order o_exchange n1)
+			(order o_go n2)
+			(order o_give n3)
+			(order o_fix_i n4)
+			(order o_give n5)
+			(order o_go n6)
+			(order o_attack_ch n7)
+			(order o_kill n8)
+		))
+ * toto pridám do goal a tak prinútim plánovač hľadať iné riešenie
+ * dostanem:
+	(go hopper village shop o_go n0 n1)
+	(exchange shopkeeper hopper metal gold_coin shop o_exchange n1 n2)
+	(go hopper shop village o_go n2 n3)
+	(give hopper hunter metal village o_give n3 n4)
+	(fix_item hunter sword metal o_fix_i n4 n5)
+	(give hunter hopper sword village o_give n5 n6)
+	(go hopper village meadow o_go n6 n7)
+	(attack_character hopper warewolf meadow o_attack_ch n7 n8)
+	(attack_character hopper warewolf meadow o_attack_ch n8 n9)
+	(kill hopper warewolf meadow o_kill n9 n10)
+	; cost = 10 (unit cost)
+ * No toto síce nie je v podstate iné riešenie, lebo rozdiel je len v tom, že dva krát sekne vlkolaka namiesto
+   raz, ale je to "iné riešenie", takže myšlienka funguje, len doména je asi príliš malá na to, aby našiel
+   veľmi rozdielne riešenia
+
+Rozšírenie domény
+ * rozšírila som doménu o sekeru a čiernu ľaliu, obchodník má sekeru, ktorú vymení za čiernu ľaliu, ktorá rastie
+   na lúke
+ * 1. riešenie:
+	(go hopper village shop o_go n0 n1)
+	(exchange shopkeeper hopper metal gold_coin shop o_exchange n1 n2)
+	(go hopper shop village o_go n2 n3)
+	(give hopper hunter metal village o_give n3 n4)
+	(fix_item hunter sword metal o_fix_i n4 n5)
+	(give hunter hopper sword village o_give n5 n6)
+	(go hopper village meadow o_go n6 n7)
+	(attack_character hopper warewolf meadow o_attack_ch n7 n8)
+	(kill hopper warewolf meadow o_kill n8 n9)
+	; cost = 9 (unit cost)
+ * 2. riešenie:
+	(go hopper village meadow o_go n0 n1)
+	(collect hopper black_lily meadow o_collect n1 n2)
+	(go hopper meadow village o_go n2 n3)
+	(go hopper village shop o_go n3 n4)
+	(exchange shopkeeper hopper axe black_lily shop o_exchange n4 n5)
+	(go hopper shop village o_go n5 n6)
+	(go hopper village meadow o_go n6 n7)
+	(attack_character hopper warewolf meadow o_attack_ch n7 n8)
+	(kill hopper warewolf meadow o_kill n8 n9)
+	; cost = 9 (unit cost)
 
