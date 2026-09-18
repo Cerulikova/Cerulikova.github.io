@@ -78,3 +78,8 @@ summary{
 	min-width:100px;
 	max-width:300px;
 }
+
+.spaceRight a{
+	margin: 0;
+	margin-right: 15px;
+}

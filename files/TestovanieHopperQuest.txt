@@ -1,0 +1,178 @@
+Quest 1: Bring an old book
+ * Obchodník má starú knihu. Prines ju mágovi. Dostaneš za to zlatý peniaz.
+ * Cieľ bez podmienky:
+	(:goal (and
+		(has mage old_book)
+		(has hopper gold_coin)	
+	))
+ * Riešenie:
+	(go hopper mill village)
+	(go hopper village shop)
+	(steal hopper shopkeeper old_book shop)
+	(go hopper shop village)
+	(go hopper village mill)
+	(buy mage hopper gold_coin old_book mill)
+	; cost = 6 (unit cost)
+
+* Možné podmienky riešenia:
+	* (bought old_book)
+
+	(go hopper mill village)
+	(go hopper village meadow)
+	(collect hopper black_lily meadow)
+	(go hopper meadow village)
+	(go hopper village shop)
+	(buy shopkeeper hopper old_book black_lily shop)
+	(go hopper shop village)
+	(go hopper village mill)
+	(buy mage hopper gold_coin old_book mill)
+	; cost = 9 (unit cost)
+
+	* (stolen old_book)
+	
+	(go hopper mill village)
+	(go hopper village shop)
+	(steal hopper shopkeeper old_book shop)
+	(go hopper shop village)
+	(go hopper village mill)
+	(buy mage hopper gold_coin old_book mill)
+	; cost = 6 (unit cost)
+		* optimálne riešenie
+
+	* (given old_book)
+	
+	(go hopper mill village)
+	(go hopper village shop)
+	(steal hopper shopkeeper old_book shop)
+	(go hopper shop village)
+	(go hopper village mill)
+	(steal hopper mage gold_coin mill)
+	(give hopper mage old_book mill)
+	; cost = 7 (unit cost)
+		* toto nie je validné riešenie, problém je spôsobený predaním odmeny hráčovi
+		* bude riešiť odmeňovanie mimo questu, alebo špeciálna akcia na danie odmeny hráčovi
+		* správne by asi nemalo existovať riešenie pre podmienku GIVEN
+
+	* (dead shopkeeper)
+		* hráč nemá zbraň, aby mohol zabiť obchodníka.
+		* Ak mu dám zbraň - meč, riešenie je možné
+
+	(go hopper mill village)
+	(go hopper village shop)
+	(attack_character hopper shopkeeper shop)
+	(kill hopper shopkeeper shop)
+	(take hopper shopkeeper old_book shop)
+	(go hopper shop village)
+	(go hopper village mill)
+	(buy mage hopper gold_coin old_book mill)
+	; cost = 8 (unit cost)
+ * Výsledok: Dostala som tri podstatne odlišné riešenia úlohy. Je potrebné premyslieť predávanie odmeny hráčovi.
+
+2. Quest: Learn about a note
+ * Lovec nechal správu v obchode. Dozveď sa, čo obsahuje. Informácia je buď v správe, ale pozná ju aj lovec.
+ * Cieľ bez podmienky:
+	(:goal (and
+		(knows hopper note)	
+	))
+ * Riešenie:
+	(go hopper mill village)
+	(spy hopper hunter note village)
+	; cost = 2 (unit cost)
+		* Toto riešenie mi nenapadlo, ale je validné
+ * Možné podmienky riešenia:
+	* (talked hunter hopper)
+
+	(go hopper mill village)
+	(talk hunter hopper note village)
+	; cost = 2 (unit cost)
+
+	* (read_inf list hopper)
+
+	(go hopper mill village)
+	(go hopper village shop)
+	(collect hopper list shop)
+	(read hopper list note)
+	; cost = 4 (unit cost)
+ * Výsledok: tri odlišné riešenia. Informácia nie je tajná a preto pre podmienky (scared hunter) a (bribed hunter)
+	     nie je riešenie.
+
+3. Quest: Werewolf problem
+ * Na lúke pri dedine je vlkolak. Postaraj sa, aby nepôsobil hrozbu.
+ * Cieľ - zabi vlkolaka:
+	(:goal (and
+		(dead werewolf)
+	))
+ * Riešenie:
+	(go hopper shop village)
+	(go hopper village meadow)
+	(attack_character hopper werewolf meadow)
+	(kill hopper werewolf meadow)
+	; cost = 4 (unit cost)
+ * Cieľ - odožeň vlkolaka:
+	(:goal (and
+		(not (at werewolf meadow))
+	))
+ * Riešenie:
+	(go hopper shop village)
+	(go hopper village meadow)
+	(attack_character hopper werewolf meadow)
+	(scare_of hopper werewolf meadow)
+	(run_away werewolf meadow forest)
+	; cost = 5 (unit cost)
+ * Výsledok: dve odlišné riešenia. Potrebujeme úplne zmeniť cieľ úlohy.
+
+4. Quest: Cure the hunter
+ * Lovca zranil vlkolak, je treba ho vyliečiť.
+ * Cieľ bez podmienky:
+	(:goal (and
+		(not (damaged hunter))
+	))
+ * Riešenie:
+	(kill hopper hunter village)
+	; cost = 1 (unit cost)
+		* No, umm... Už sa lovec nemôže sťažovať, že ho bolí ruka
+		* Jedným z efektov akcie kill je (not (damaged ...)). Dala som to tam, aby som to nezabudla
+		  v prípade, že sa nejako oživí mŕtva postava, ale tak sa mi zdá, že to dám preč
+ * Opravené riešenie:
+	(go hopper village mill)
+	(steal hopper mage med2 mill)
+	(go hopper mill village)
+	(cure hopper hunter med2 village)
+	; cost = 4 (unit cost)
+		* toto už vyzerá trochu lepšie. Tu bude asi dosť veľa riešení, keďže sú dostupné dve medicíny
+		  a je viacero spôsobov ich získať
+ * Možné podmienky riešenia:
+	* (used med1) - ktorú medicínu má použiť
+
+	(go hopper village meadow)
+	(go hopper meadow forest)
+	(collect hopper med1 forest)
+	(go hopper forest meadow)
+	(go hopper meadow village)
+	(cure hopper hunter med1 village)
+	; cost = 6 (unit cost)
+
+	* (used med2)
+	  (bought med2)
+
+	(give hunter hopper gold village)
+	(go hopper village mill)
+	(buy mage hopper med2 gold mill)
+	(go hopper mill village)
+	(cure hopper hunter med2 village)
+	; cost = 5 (unit cost)
+
+	* (used med2)
+	  (dead mage)
+
+	(go hopper village mill)
+	(attack_character hopper mage mill)
+	(kill hopper mage mill)
+	(take hopper mage med2 mill)
+	(go hopper mill village)
+	(cure hopper hunter med2 village)
+	; cost = 6 (unit cost)
+		* to, či je toto riešenie logické je síce otázne, ale je "v rámci pravidiel hry"
+ * Výsledok: Po oprave akcie kill sa našli 4 riešenia.
+
+
