@@ -606,6 +606,48 @@
 					Vďaka tomu som pôvodný plán zakázala a po opätovnom spustení plánovača dostanem iný plán.
 				</div>
 			</details>
+			<details>
+				<summary>20.9.2026 - Alternatívne plány pomocou typov úloh</summary>
+				<div class="diaryEntry">
+					Posledne som sa pokúšala hľadať alternatívne plány tak, že som si vytvorila spôsob, ktorým viem zakázať
+					špecifickú postupnosť akcií. To mi umožnilo plánovaču jednoznačne povedať, že chcem, aby hľadal iný plán.
+					Tento prístup má však problém, že jednotlivé riešenia si môžu byť podobné. Toto som pozorovala pri testovaní
+					úlohy "Zabi vlkolaka", kde v prvom riešení, hráč zabije vlkolaka mečom a druhé riešenie bolo rovnaké s tým
+					rozdieľom, že hráč udrie vlkolaka dva krát a nie len raz. Pridanie novej zbrane do domény síce umožnilo nové
+					a rozdielne riešenie, ale plánovač ho našiel len preto, že bolo zhodou okolností kratšie ako riešenie s
+					dvojitým seknutím. Ak by jeho cena bola väčšia, plánovač by stále uprednostnil riešenie podobné prvému. Z 
+					tohto dôvodu potrebujem iný spôsob hľadania alternatívnych riešení.
+					<br><br>
+					Nové riešenie problému potrebujem hľadať tak, že nezakážem predchádzajúce riešenie, ale zakážem niečo preň
+					typické (napr. hráč nesmie mať meč), alebo do cieľového stavu pridám niečo typické pre nové riešenie.
+					<ul> napr.
+						<li> 1. riešenie <code>(:goal (and (not (alive werewolf) ) (has hopper sword)))</code></li>
+						<li> 2. riešenie <code>(:goal (and (not (alive werewolf) ) (has hopper axe)))</code></li>
+					</ul>
+					Preto som hľadala spôsob, ako jednoducho vytvárať úlohy a k nim prislúchajúce ciele s typickými znakmi
+					rôznych riešenií. <a class="tutlink" href= "PDF/LARC-2011-02.pdf"><em>Doran a Parberry</em></a> vo svojej 
+					práci prišli na to, že herné úlohy majú istú štruktúru a popísali motivácie úloh a k nim prislúchajúce
+					stratégie. Na základe nimi vypracovanej tabuľky som si vytvorila vlastnú tabuľku typov úloh a ich možných 
+					spôsobov riešenia (<a class="tutlink" href= "PDF/Typy_uloh_a_riesenia.pdf"><em>Typy úloh a riešenia</em></a>).
+					Následne som vypracovala novú doménu <em>HopperQuest</em> (dostupná v časti <a class="tutlink" 
+					href= "work.html"><em>Práca</em></a>), ktorá obsahuje zatiaľ všetky akcie potrebné na uskutočnenie 7 rôznych
+					typov úloh (Prines predmet X, Získaj informáciu I, Odstráň monštrá/parazity, Vylieč zranené NPC, Oprav 
+					poškodenú budovu X, Zaútoč na nepriateľa, Ukradni predmet X). Táto nová doména nevyužíva čísla a identifikátory
+					akcií, ale nemiesto nich má niekoľko nových predikátov, ktoré umožňujú popísať typické znaky jednotlivých
+					riešení (napr. či bol nejaký predmet ukradnutý, kúpený alebo darovaný). Aby som overila, či je plánovač
+					pri použití tejto domény schopný vytvárať zmyslupné úlohy, vytvorila som štyri problémy popisujúce úlohy
+					rôznych typov a vyskúšala nájsť plán pre všetky možné spôsoby riešenia týchto úloh. Získané riešenia vo
+					väčšine prípadov dávali zmysel a boli od seba dostatočne odlišné. Samozrejme, nie vždy dokázal plánovač nájsť
+					v danom stave herného sveta plán pre všetky spôsoby riešenia danej úlohy, čo som aj očakávala. Jednotlivé
+					problémy a aj poznámky k nim sa nachádzajú tiež v časti <em>Práca</em>.
+					<br><br>
+					Na záver ešte dodám, že ku každému typu questu som pridala jeden znak (+,-,=) pre morálku. Uvažovala som totiž nad
+					spôsobom, ako by hráčove rozhodnutia mohli ovplyvňovať nasledujúci priebeh hry a napadlo mi, že by každý typ úlohy
+					mohol mať nejakú morálku a každé riešenie úlohy by mohlo hráčovi zvýšiť, znížiť alebo zachovať morálku a pri 
+					vyberaní nasledujúcej úlohy, by úlohy s rovnakou morálkou akú má hráč mohli mať väčšiuu pravdepodobnosť. zatiaľ
+					je to len taký nápad. Treba to ešte zvažiť a premyslieť ako by som to implementovala. Možno do fitness funkcie?
+				</div>
+			</details>
 			<!--<details>
 				<summary>Testovací vstup</summary>
 				<div class="diaryEntry">
