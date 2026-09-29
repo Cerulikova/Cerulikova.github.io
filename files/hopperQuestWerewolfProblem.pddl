@@ -40,7 +40,7 @@
 		
 	)
 	(:goal (and
-		;(dead werewolf) ;or
-		(not (at werewolf meadow))
+		(dead werewolf) ;or
+		;(not (at werewolf meadow))
 	))
 )

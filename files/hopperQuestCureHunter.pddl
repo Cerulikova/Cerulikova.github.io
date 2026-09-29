@@ -51,9 +51,9 @@
 		;(used med1)
 
 		;(used med2)
-		;(bought med2)
+		;(bought med2 mage)
 
 		;(used med2)
-		;(dead mage)
+		;(taken med2 mage)
 	))
 )

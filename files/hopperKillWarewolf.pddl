@@ -9,7 +9,6 @@
 		sword - weapon
 		axe - weapon
 		gold_coin - item
-		black_lily - item
 		metal - material
 		shop - building
 		village - location
@@ -19,16 +18,27 @@
 		n1 n2 n3 n4 n5 n6 n7 n8 n9 n10 n11 n12 n13 n14 n15 n16 n17 n18 n19 n20 n21 n22 n23 n24 n25 n26 n27 n28 n29 n30 - number
 		n31 n32 n33 n34 n35 n36 n37 n38 n39 n40 n41 n42 n43 n44 n45 n46 n47 n48 n49 n50 - number
 		o_go - a_go
-		o_attack_ch - a_attack_ch
-		o_ attack_b - a_attack_b
-		o_kill - a_kill
-		o_break - a_break
 		o_collect - a_collect
-		o_exchange - a_exchange
+		o_buy - a_buy
+		o_steal - a_steal
 		o_give - a_give
+		o_player_give - a_player_give
+		o_take - a_take
+		o_attack_ch - a_attack_ch
+		o_kill - a_kill
+		o_talk - a_talk
+		o_spy - a_spy
+		o_bribe - a_bribe
+		o_initimidate - a_intimidate
+		o_read - a_read
+		o_scare - a_scare
+		o_run - a_run
 		o_cure - a_cure
+		o_attack_b - a_attack_b
+		o_break - a_break
 		o_fix_b - a_fix_b
 		o_fix_i - a_fix_i
+		o_refuse - a_refuse
 	)
 	(:init
 		(path shop village)
@@ -55,6 +65,7 @@
 		(price axe black_lily)
 		(fixes metal sword)
 		(can_fix hunter sword)
+		(inhabited village)
 		
 		(current n0)
 		(next n0 n1)
@@ -110,17 +121,94 @@
 	)
 	(:goal (and
 		(not (alive warewolf))
+
+		;(not (and 
+		;	(order o_go n0)
+		;	(order o_steal n1)
+		;	(order o_go n2)
+		;	(order o_go n3)
+		;	(order o_attack_ch n4)
+		;	(order o_kill n5)
+		;))
+
+		;riešnie s dvojeným attack
+		;(not (and 
+		;	(order o_go n0)
+		;	(order o_steal n1)
+		;	(order o_go n2)
+		;	(order o_go n3)
+		;	(order o_attack_ch n4)
+		;	(order o_attack_ch n5)
+		;	(order o_kill n6)
+		;))
+
+		;(not (and 
+		;	(order o_go n0)
+		;	(order o_steal n1)
+		;	(order o_go n2)
+		;	(order o_go n3)
+		;	(order o_attack_ch n4)
+		;	(order o_scare n5)
+		;	(order o_kill n6)
+		;))
+
+		;prečo udrel toho úbohého lovca
+		;(not (and 
+		;	(order o_go n0)
+		;	(order o_steal n1)
+		;	(order o_go n2)
+		;	(order o_attack_ch n3)
+		;	(order o_go n4)
+		;	(order o_attack_ch n5)
+		;	(order o_kill n6)
+		;))
+
+		;takže namiesto toho, aby si za mincu kupil sekeru, sekeru ukradne a mincu daruje
+		;(not (and 
+		;	(order o_go n0)
+		;	(order o_steal n1)
+		;	(order o_go n2)
+		;	(order o_player_give n3)
+		;	(order o_go n4)
+		;	(order o_attack_ch n5)
+		;	(order o_kill n6)
+		;))
+
+		;ukredne sekeru a od lovca dostane zlomený meč, ktorý je mu na nič...
+		;(not (and 
+		;	(order o_go n0)
+		;	(order o_steal n1)
+		;	(order o_go n2)
+		;	(order o_give n3)
+		;	(order o_go n4)
+		;	(order o_attack_ch n5)
+		;	(order o_kill n6)
+		;))
+
+		;ukredne sekeru aj meč
+		;(not (and 
+		;	(order o_go n0)
+		;	(order o_steal n1)
+		;	(order o_go n2)
+		;	(order o_steal n3)
+		;	(order o_go n4)
+		;	(order o_attack_ch n5)
+		;	(order o_kill n6)
+		;))
+
 		
-		(not (and 
-			(order o_go n0)
-			(order o_exchange n1)
-			(order o_go n2)
-			(order o_give n3)
-			(order o_fix_i n4)
-			(order o_give n5)
-			(order o_go n6)
-			(order o_attack_ch n7)
-			(order o_kill n8)
-		))
+		;ja sa vzdávam, proste k riešenia, kde si niečo kúpi sú dlhšie než to, že ukradne niečo
+		;a spraví nejakú blbosť
+		;(not (and 
+		;	(order o_go n0)
+		;	(order o_buy n1)
+		;	(order o_go n2)
+		;	(order o_give n3)
+		;	(order o_fix_i n4)
+		;	(order o_give n5)
+		;	(order o_go n6)
+		;	(order o_attack_ch n7)
+		;	(order o_kill n8)
+		;))
 	))
 )

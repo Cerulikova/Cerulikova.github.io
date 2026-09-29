@@ -47,13 +47,13 @@
 		(has mage old_book)
 		(has hopper gold_coin)
 
-		;(bought old_book)
+		;(bought old_book shopkeeper)
 
-		;(stolen old_book)
+		;(stolen old_book shopkeeper)
 
-		;(given old_book)
+		;(given old_book shopkeeper)
 
-		;(dead shopkeeper)
+		;(taken old_book shopkeeper)
 		
 		
 	))

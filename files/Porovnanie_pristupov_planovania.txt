@@ -1,0 +1,349 @@
+QUEST 1 : Bring old book
+	* generujem 3 riešenia
+Hopper:
+	1. riešenie
+	(go hopper mill village o_go n0 n1)
+	(go hopper village shop o_go n1 n2)
+	(steal hopper shopkeeper old_book shop o_steal n2 n3)
+	(go hopper shop village o_go n3 n4)
+	(go hopper village mill o_go n4 n5)
+	(buy mage hopper gold_coin old_book mill o_buy n5 n6)
+	; cost = 6 (unit cost)
+
+	2. riešenie
+	(go hopper mill village o_go n0 n1)
+	(go hopper village shop o_go n1 n2)
+	(steal hopper shopkeeper old_book shop o_steal n2 n3)
+	(go hopper shop village o_go n3 n4)
+	(go hopper village mill o_go n4 n5)
+	(attack_character hopper mage mill o_attack_ch n5 n6)
+	(buy mage hopper gold_coin old_book mill o_buy n6 n7)
+	; cost = 7 (unit cost)
+
+	3. riešenie
+	(go hopper mill village o_go n0 n1)
+	(go hopper village shop o_go n1 n2)
+	(steal hopper shopkeeper old_book shop o_steal n2 n3)
+	(go hopper shop village o_go n3 n4)
+	(go hopper village mill o_go n4 n5)
+	(attack_building hopper mill o_attack_b n5 n6)
+	(buy mage hopper gold_coin old_book mill o_buy n6 n7)
+	; cost = 7 (unit cost)
+
+	*4. riešenie
+	(go hopper mill village o_go n0 n1)
+	(go hopper village shop o_go n1 n2)
+	(steal hopper shopkeeper old_book shop o_steal n2 n3)
+	(go hopper shop village o_go n3 n4)
+	(go hopper village mill o_go n4 n5)
+	(player_give hopper mage old_book mill o_player_give n5 n6)
+	(steal hopper mage gold_coin mill o_steal n6 n7)
+	; cost = 7 (unit cost)
+
+HopperQuest:
+	1. riešenie
+	(go hopper mill village)
+	(go hopper village shop)
+	(steal hopper shopkeeper old_book shop)
+	(go hopper shop village)
+	(go hopper village mill)
+	(buy mage hopper gold_coin old_book mill)
+	; cost = 6 (unit cost)
+
+	2. riešenie
+	(go hopper mill village)
+	(go hopper village meadow)
+	(collect hopper black_lily meadow)
+	(go hopper meadow village)
+	(go hopper village shop)
+	(buy shopkeeper hopper old_book black_lily shop)
+	(go hopper shop village)
+	(go hopper village mill)
+	(buy mage hopper gold_coin old_book mill)
+	; cost = 9 (unit cost)
+
+	3. riešenie
+	(go hopper mill village)
+	(go hopper village shop)
+	(attack_character hopper shopkeeper shop)
+	(kill hopper shopkeeper shop)
+	(take hopper shopkeeper old_book shop)
+	(go hopper shop village)
+	(go hopper village mill)
+	(buy mage hopper gold_coin old_book mill)
+	; cost = 8 (unit cost)
+
+QUEST 2: Learn about a note
+	* generujem 3 riešenia
+Hopper:
+	1. riešenie
+	(go hopper mill village o_go n0 n1)
+	(spy hopper hunter note village o_spy n1 n2)
+	; cost = 2 (unit cost)
+
+	2. riešenie
+	(go hopper mill village o_go n0 n1)
+	(talk hunter hopper note village o_talk n1 n2)
+	; cost = 2 (unit cost)
+
+	3. riešenie
+	(go hopper mill village o_go n0 n1)
+	(attack_character hopper hunter village o_attack_ch n1 n2)
+	(spy hopper hunter note village o_spy n2 n3)
+	; cost = 3 (unit cost)
+
+HopperQuest:
+	1. riešenie
+	(go hopper mill village)
+	(spy hopper hunter note village)
+	; cost = 2 (unit cost)
+
+	2. riešenie
+	(go hopper mill village)
+	(talk hunter hopper note village)
+	; cost = 2 (unit cost)
+
+	3. riešenie
+	(go hopper mill village)
+	(go hopper village shop)
+	(collect hopper list shop)
+	(read hopper list note)
+	; cost = 4 (unit cost)
+
+QUEST 3: Werewolf problem
+	* generujem 3 riešenia
+Hopper:
+	1. riešenie
+	(go hopper shop village o_go n0 n1)
+	(go hopper village meadow o_go n1 n2)
+	(attack_character hopper werewolf meadow o_attack_ch n2 n3)
+	(kill hopper werewolf meadow o_kill n3 n4)
+	; cost = 4 (unit cost)
+
+	2. riešenie
+	(go hopper shop village o_go n0 n1)
+	(go hopper village meadow o_go n1 n2)
+	(attack_character hopper werewolf meadow o_attack_ch n2 n3)
+	(attack_character hopper werewolf meadow o_attack_ch n3 n4)
+	(kill hopper werewolf meadow o_kill n4 n5)
+	; cost = 5 (unit cost)
+
+	3. riešenie
+	(go hopper shop village o_go n0 n1)
+	(go hopper village meadow o_go n1 n2)
+	(attack_character hopper werewolf meadow o_attack_ch n2 n3)
+	(scare_of hopper werewolf meadow o_scare n3 n4)
+	(kill hopper werewolf meadow o_kill n4 n5)
+	; cost = 5 (unit cost)
+
+	*4. riešenie
+	(go hopper shop village o_go n0 n1)
+	(go hopper village meadow o_go n1 n2)
+	(attack_character hopper werewolf meadow o_attack_ch n2 n3)
+	(scare_of hopper werewolf meadow o_scare n3 n4)
+	(run_away werewolf meadow forest o_run n4 n5)
+	; cost = 5 (unit cost)
+
+HopperQuest:
+	1. riešenie
+	(go hopper shop village)
+	(go hopper village meadow)
+	(attack_character hopper werewolf meadow)
+	(kill hopper werewolf meadow)
+	; cost = 4 (unit cost)
+
+	2. riešenie
+	(go hopper shop village)
+	(go hopper village meadow)
+	(attack_character hopper werewolf meadow)
+	(scare_of hopper werewolf meadow)
+	(run_away werewolf meadow forest)
+	; cost = 5 (unit cost)
+
+	3. riešenie
+	-
+
+QUEST 4: Cure the hunter
+	* generujem 3 riešenia
+Hopper:
+	1. riešenie
+	(go hopper village mill o_go n0 n1)
+	(steal hopper mage med2 mill o_steal n1 n2)
+	(go hopper mill village o_go n2 n3)
+	(cure hopper hunter med2 village o_cure n3 n4)
+	; cost = 4 (unit cost)
+
+	2. riešenie
+	(go hopper village mill o_go n0 n1)
+	(steal hopper mage med2 mill o_steal n1 n2)
+	(go hopper mill village o_go n2 n3)
+	(attack_character hopper hunter village o_attack_ch n3 n4)
+	(cure hopper hunter med2 village o_cure n4 n5)
+	; cost = 5 (unit cost)
+
+	3. riešenie
+	(go hopper village mill o_go n0 n1)
+	(steal hopper mage med2 mill o_steal n1 n2)
+	(go hopper mill village o_go n2 n3)
+	(player_give hopper hunter med2 village o_player_give n3 n4)
+	(cure hunter hunter med2 village o_cure n4 n5)
+	; cost = 5 (unit cost)
+
+	*4. riešenie
+	(go hopper village mill o_go n0 n1)
+	(steal hopper mage med2 mill o_steal n1 n2)
+	(go hopper mill village o_go n2 n3)
+	(give hunter hopper gold village o_give n3 n4)
+	(cure hopper hunter med2 village o_cure n4 n5)
+	; cost = 5 (unit cost)
+
+HopperQuest:
+	1. riešenie
+	(go hopper village mill)
+	(steal hopper mage med2 mill)
+	(go hopper mill village)
+	(cure hopper hunter med2 village)
+	; cost = 4 (unit cost)
+
+	2. riešenie
+	(go hopper village meadow)
+	(go hopper meadow forest)
+	(collect hopper med1 forest)
+	(go hopper forest meadow)
+	(go hopper meadow village)
+	(cure hopper hunter med1 village)
+	; cost = 6 (unit cost)
+
+	3. riešenie
+	(give hunter hopper gold village)
+	(go hopper village mill)
+	(buy mage hopper med2 gold mill)
+	(go hopper mill village)
+	(cure hopper hunter med2 village)
+	; cost = 5 (unit cost)
+
+	*4. riešenie
+	(go hopper village mill)
+	(attack_character hopper mage mill)
+	(kill hopper mage mill)
+	(take hopper mage med2 mill)
+	(go hopper mill village)
+	(cure hopper hunter med2 village)
+	; cost = 6 (unit cost)
+
+*******************************************************************
+Vstupy pre plan_edit_distance.py:
+
+oldBook1_1 = removeNumbers('''(go hopper mill village o_go n0 n1)
+	(go hopper village shop o_go n1 n2)
+	(steal hopper shopkeeper old_book shop o_steal n2 n3)
+	(go hopper shop village o_go n3 n4)
+	(go hopper village mill o_go n4 n5)
+	(buy mage hopper gold_coin old_book mill o_buy n5 n6)''')
+oldBook1_2 = removeNumbers('''(go hopper mill village o_go n0 n1)
+	(go hopper village shop o_go n1 n2)
+	(steal hopper shopkeeper old_book shop o_steal n2 n3)
+	(go hopper shop village o_go n3 n4)
+	(go hopper village mill o_go n4 n5)
+	(attack_character hopper mage mill o_attack_ch n5 n6)
+	(buy mage hopper gold_coin old_book mill o_buy n6 n7)''')
+oldBook1_3 = removeNumbers('''(go hopper mill village o_go n0 n1)
+	(go hopper village shop o_go n1 n2)
+	(steal hopper shopkeeper old_book shop o_steal n2 n3)
+	(go hopper shop village o_go n3 n4)
+	(go hopper village mill o_go n4 n5)
+	(attack_building hopper mill o_attack_b n5 n6)
+	(buy mage hopper gold_coin old_book mill o_buy n6 n7)''')
+oldBook2_1 = '''(go hopper mill village)
+	(go hopper village shop)
+	(steal hopper shopkeeper old_book shop)
+	(go hopper shop village)
+	(go hopper village mill)
+	(buy mage hopper gold_coin old_book mill)'''
+oldBook2_2 = '''(go hopper mill village)
+	(go hopper village meadow)
+	(collect hopper black_lily meadow)
+	(go hopper meadow village)
+	(go hopper village shop)
+	(buy shopkeeper hopper old_book black_lily shop)
+	(go hopper shop village)
+	(go hopper village mill)
+	(buy mage hopper gold_coin old_book mill)'''
+oldBook2_3 = '''(go hopper mill village)
+	(go hopper village shop)
+	(attack_character hopper shopkeeper shop)
+	(kill hopper shopkeeper shop)
+	(take hopper shopkeeper old_book shop)
+	(go hopper shop village)
+	(go hopper village mill)
+	(buy mage hopper gold_coin old_book mill)'''
+
+note1_1 = removeNumbers('''(go hopper mill village o_go n0 n1)
+	(spy hopper hunter note village o_spy n1 n2)''')
+note1_2 = removeNumbers('''(go hopper mill village o_go n0 n1)
+	(talk hunter hopper note village o_talk n1 n2)''')
+note1_3 = removeNumbers('''(go hopper mill village o_go n0 n1)
+	(attack_character hopper hunter village o_attack_ch n1 n2)
+	(spy hopper hunter note village o_spy n2 n3)''')
+note2_1 = '''(go hopper mill village)
+	(spy hopper hunter note village)'''
+note2_2 = '''(go hopper mill village)
+	(talk hunter hopper note village)'''
+note2_3 = '''(go hopper mill village)
+	(go hopper village shop)
+	(collect hopper list shop)
+	(read hopper list note)'''
+
+werewolf1_1 = removeNumbers('''(go hopper shop village o_go n0 n1)
+	(go hopper village meadow o_go n1 n2)
+	(attack_character hopper werewolf meadow o_attack_ch n2 n3)
+	(kill hopper werewolf meadow o_kill n3 n4)''')
+werewolf1_2 = removeNumbers('''(go hopper shop village o_go n0 n1)
+	(go hopper village meadow o_go n1 n2)
+	(attack_character hopper werewolf meadow o_attack_ch n2 n3)
+	(attack_character hopper werewolf meadow o_attack_ch n3 n4)
+	(kill hopper werewolf meadow o_kill n4 n5)''')
+werewolf1_3 = removeNumbers('''(go hopper shop village o_go n0 n1)
+	(go hopper village meadow o_go n1 n2)
+	(attack_character hopper werewolf meadow o_attack_ch n2 n3)
+	(scare_of hopper werewolf meadow o_scare n3 n4)
+	(kill hopper werewolf meadow o_kill n4 n5)''')
+werewolf2_1 = '''(go hopper shop village)
+	(go hopper village meadow)
+	(attack_character hopper werewolf meadow)
+	(kill hopper werewolf meadow)'''
+werewolf2_2 = '''(go hopper shop village)
+	(go hopper village meadow)
+	(attack_character hopper werewolf meadow)
+	(scare_of hopper werewolf meadow)
+	(run_away werewolf meadow forest)'''
+
+cureHunter1_1 = removeNumbers('''(go hopper village mill o_go n0 n1)
+	(steal hopper mage med2 mill o_steal n1 n2)
+	(go hopper mill village o_go n2 n3)
+	(cure hopper hunter med2 village o_cure n3 n4)''')
+cureHunter1_2 = removeNumbers('''(go hopper village mill o_go n0 n1)
+	(steal hopper mage med2 mill o_steal n1 n2)
+	(go hopper mill village o_go n2 n3)
+	(attack_character hopper hunter village o_attack_ch n3 n4)
+	(cure hopper hunter med2 village o_cure n4 n5)''')
+cureHunter1_3 = removeNumbers('''(go hopper village mill o_go n0 n1)
+	(steal hopper mage med2 mill o_steal n1 n2)
+	(go hopper mill village o_go n2 n3)
+	(player_give hopper hunter med2 village o_player_give n3 n4)
+	(cure hunter hunter med2 village o_cure n4 n5)''')
+cureHunter2_1 = '''(go hopper village mill)
+	(steal hopper mage med2 mill)
+	(go hopper mill village)
+	(cure hopper hunter med2 village)'''
+cureHunter2_2 = '''(go hopper village meadow)
+	(go hopper meadow forest)
+	(collect hopper med1 forest)
+	(go hopper forest meadow)
+	(go hopper meadow village)
+	(cure hopper hunter med1 village)'''
+cureHunter2_3 = '''(give hunter hopper gold village)
+	(go hopper village mill)
+	(buy mage hopper med2 gold mill)
+	(go hopper mill village)
+	(cure hopper hunter med2 village)'''

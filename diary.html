@@ -648,6 +648,49 @@
 					je to len taký nápad. Treba to ešte zvažiť a premyslieť ako by som to implementovala. Možno do fitness funkcie?
 				</div>
 			</details>
+			<details>
+				<summary>29.9.2026 - Porovnanie hopperDomain a hopperQuestDomain pomocou editačnej vzdialenosti</summary>
+				<div class="diaryEntry">
+					Od podsledného záznamu, bolo hlavnou úlohou nejak objektívne porovnať oba prístupy (hopper a hopperQuest) na
+					hľadanie rozdielnych riešení (plánov). Na spravenie tohto porovnania som sa rozhodla použiť editačnú 
+					vzdialenosť. Aby som mohla oba prístupy porovnať, bolo najprv potrebné, aby boli obe domény <em>
+					hopperDomain</em> a <em>hopperQuestDomain</em> rovnocenné. Takže som hlavne podopĺňala akcie do hopperDomain
+					a spravila som ešte aj nejaké zmeny v parametroch predikátov a v samotných akciách. Napr. som rozdelila
+					akciu give na dve - give a player_give - čiže, NPC dá niečo inej postave a hráč na niečo NPC. Takisto
+					som hráčovi zakázala dať NPC predmet, ktorý si od neho pred tým kúpil alebo mu ho ukradol. Zabraňuje to
+					tomu, aby si hráč s NPC prehadzovali predmety, čo robilo občas divné a nelogické riešenia.
+					<br><br>
+					Ďalej som potrebovala napísať program, ktorý by mi vyrátal editačnú vzdialenosť plánov. Editačná vzdialenosť
+					zvyčajne ráta rozdiel v texte znak po znaku. Ja však potrebujem porovnávať plány. Prvý spôsob, ktorý mi 
+					napadol, ktorým by som mohla porovnávať plány, bol po slovách. Teda odstrániť zátvorky a iné netlačené znaky
+					a pozerať sa na to len, ako na postupnosť slov. Toto riešenie rovnakým spôsobom hodnotí akcie aj ich parametre.
+					Vykresľuje väčšie hodnoty rozdielnosti a pracuje len s celými číslami. Druhý spôsob, ktorý som vymyslela, sa
+					snaží viac zohľadňovať to, že vstupom je plán. Porovnáva preto akcie zvlášť a parametre zvlášť. Pozrie sa na 
+					akciu a rozhodne, akú zmenu je s ňou potrebné vykonať (zmazanie, vloženie, subtitúcia). Cenu substitúcie 
+					pritom ráta nasledovne: Ak sú to rozdielne akcie, cena je 1. Ak sú to rovnaké akcie ide sa pozrieť na 
+					parametre a za každý parameter, ktorý sa líši priráta k cene 1/(počet parametrov). Takto cena substitúcie 
+					nikdy neprekročí cez 1 a zároveň je zohľadnená rozdielnosť parametrov. Takým odhadom som mala pocit, že 
+					druhý spôsob sa v mojom prípade viac hodí, ale nebola som si istá, tak som implementovala obydva. Kód, ktorý
+					som použila na vyhodnocovanie je v súbore <a class="tutlink" href="code/plan_edit_distance.py">
+					plan_edit_distance.py</a>, kde funkcia <code>distance1(planA, planB)</code> ráta editačnú vzdialenosť prvým
+					spôsobom a <code>distance2(planA, planB)</code> implementuje druhý spôsob.
+					<br><br>
+					Ešte je dôležité spomenúť, že doména hopperDomain prídáva na konci všetkých akcií čísla aktuálneho a 
+					nasledujúceho kroku. Tie by mohli skreslovať výsledky editačnej vzdialenosti, najmä ak sa použilo vkladanie a
+					mazanie (rovnaké akcie v oboch plánoch len vykonané v inom kroku). Takže pri rátaní editačnej vzdialenosti
+					tieto čísla odstraňujem pomocou funkcie <code>removeNumbers(plan)</code>. Funkcia ráta s tým, že na konci 
+					každej akcie sú dve čísla vo formáte nX, ktoré dá preč.
+					<br><br>
+					Potom to už bolo iba o tom, že som prepísala úlohy: Problém Prines starú knihu, Problém Získaj informáciu,
+					Problém s vlkolakom a Problém Vylieč lovca aj pre doménu hopperDomain (všetky sú na <a class="tutlink"
+					href="work.html">Práca</a>) a pre obe domény a každý problém vygenerovala tri riešenia (kde to bolo možné).
+					Následne som všetky vzniknuté riešenia porovnala (vždy prvé s druhým a prvé s tretím) a výsledky zapísala
+					do tabuľky. Výsledky som znázornila aj na grafe. Použila som oba spôsoby rátania editačnej vzdialenosti,
+					čiže mi vznikli dve tabuľky a dva grafy (<a class="tutlink" href="PDF/porovnanie_pristupov.pdf">Porovnanie 
+					prístupov</a>). Oba spôsoby vyhodnocovania editačnej vzdialenosti pritom ukazujú, že 2. prístup (použitie
+					hopperQuestDomain) produkuje riešenia s väčšou editačnou vzdialenosťou - teda sú od seba odlišnejšie.
+				</div>
+			</details>
 			<!--<details>
 				<summary>Testovací vstup</summary>
 				<div class="diaryEntry">

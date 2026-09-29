@@ -15,7 +15,7 @@ Quest 1: Bring an old book
 	; cost = 6 (unit cost)
 
 * Možné podmienky riešenia:
-	* (bought old_book)
+	* (bought old_book shopkeeper)
 
 	(go hopper mill village)
 	(go hopper village meadow)
@@ -28,7 +28,7 @@ Quest 1: Bring an old book
 	(buy mage hopper gold_coin old_book mill)
 	; cost = 9 (unit cost)
 
-	* (stolen old_book)
+	* (stolen old_book shopkeeper)
 	
 	(go hopper mill village)
 	(go hopper village shop)
@@ -53,7 +53,30 @@ Quest 1: Bring an old book
 		* bude riešiť odmeňovanie mimo questu, alebo špeciálna akcia na danie odmeny hráčovi
 		* správne by asi nemalo existovať riešenie pre podmienku GIVEN
 
-	* (dead shopkeeper)
+	* skusila som upraviť predikát given na (given old_book shopkeeper)
+	
+	(go hopper mill village)
+	(go hopper village meadow)
+	(collect hopper black_lily meadow)
+	(go hopper meadow village)
+	(go hopper village shop)
+	(buy shopkeeper hopper old_book black_lily shop)
+	(give hopper shopkeeper old_book shop)
+	(give shopkeeper hopper old_book shop)
+	(go hopper shop village)
+	(go hopper village mill)
+	(buy mage hopper gold_coin old_book mill)
+	; cost = 11 (unit cost)
+		* ach.....
+
+	* prepísala som akciu give, tak, že som ju rozbila na dve
+		* give - dedinčan dá niečo nejakému inému charakteru
+		* player_give - hráč dá niečo nejakému charakteru, nenastavuje given(?i, ?by)
+		* nepomohlo... Stále si vedia prehadzovať starú knihu
+	* akciu player_give upravím tak, že hráč nemôže dať predmet postave, od ktorej ho kúpil alebo ukradol
+		* konečne sa vyhneme nelogickému riešeniu
+
+	* (taken old_book shopkeeper)
 		* hráč nemá zbraň, aby mohol zabiť obchodníka.
 		* Ak mu dám zbraň - meč, riešenie je možné
 
@@ -80,13 +103,13 @@ Quest 1: Bring an old book
 	; cost = 2 (unit cost)
 		* Toto riešenie mi nenapadlo, ale je validné
  * Možné podmienky riešenia:
-	* (talked hunter hopper)
+	* (talked hunter hopper note)
 
 	(go hopper mill village)
 	(talk hunter hopper note village)
 	; cost = 2 (unit cost)
 
-	* (read_inf list hopper)
+	* (read_inf list hopper note)
 
 	(go hopper mill village)
 	(go hopper village shop)
@@ -163,7 +186,7 @@ Quest 1: Bring an old book
 	; cost = 5 (unit cost)
 
 	* (used med2)
-	  (dead mage)
+	  (taken med2 mage)
 
 	(go hopper village mill)
 	(attack_character hopper mage mill)

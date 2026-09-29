@@ -41,8 +41,8 @@
 	(:goal (and
 		(knows hopper note)
 		
-		;(talked hunter hopper)
+		;(talked hunter hopper note)
 
-		;(read_inf list hopper)
+		;(read_inf list hopper note)
 	))
 )

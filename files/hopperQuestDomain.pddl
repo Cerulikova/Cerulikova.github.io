@@ -28,14 +28,15 @@
 		(inhabited ?l - location)
 
 		(collected ?i - item)
-		(bought ?i - item)
-		(stolen ?i - item)
-		(given ?i - item)
-		(talked ?ch1 - character ?ch2 - character)
-		(spied ?who - character ?target - character)
+		(bought ?i - item ?from - character)
+		(stolen ?i - item ?from - character)
+		(taken ?i - item ?from - character)
+		(given ?i - item ?by - character)
+		(talked ?ch1 - character ?ch2 - character ?about - information)
+		(spied ?who - character ?target - character ?inf - information)
 		(bribed ?ch - character)
 		(scared ?ch - character)
-		(read_inf ?i - item ?ch - character)
+		(read_inf ?i - item ?ch - character ?inf - information)
 		(used ?i - item)
 		
 		(refused ?h - hero ?ch - character)
@@ -59,26 +60,33 @@
 		:precondition (and (alive ?seller) (alive ?buyer) (has ?seller ?i1) (has ?buyer ?i2) (at ?seller ?l)
 						(at ?buyer ?l) (blocks ?seller ?i1) (price ?i1 ?i2) (not (= ?seller ?buyer)))
 		:effect (and (not (has ?seller ?i1)) (not (has ?buyer ?i2)) (has ?seller ?i2) (has ?buyer ?i1)
-					(not (blocks ?seller ?i1)) (bought ?i1))
+					(not (blocks ?seller ?i1)) (bought ?i1 ?seller))
 	)
 
 	(:action steal
 		:parameters (?h - hero ?ch - character ?it - item ?l - location)
-		:precondition (and (alive ?h) (alive ?ch) (has ?ch ?it) (at ?ch ?l) (at ?h ?l))
-		:effect (and (not (has ?ch ?it)) (has ?h ?it) (stolen ?it))
+		:precondition (and (alive ?h) (alive ?ch) (has ?ch ?it) (at ?ch ?l) (at ?h ?l) (not (= ?h ?ch)))
+		:effect (and (not (has ?ch ?it)) (has ?h ?it) (stolen ?it ?ch))
 	)
 
 	(:action give
-		:parameters (?char1 - character ?char2 - character ?it - item ?l - location)
-		:precondition (and (alive ?char1) (alive ?char2) (at ?char1 ?l) (at ?char2 ?l) (has ?char1 ?it)
-					(not (blocks ?char1 ?it)) (not (= ?char1 ?char2)))
-		:effect (and (not (has ?char1 ?it)) (has ?char2 ?it) (given ?it))
+		:parameters (?v - villager ?char - character ?it - item ?l - location)
+		:precondition (and (alive ?v) (alive ?char) (at ?v ?l) (at ?char ?l) (has ?v ?it)
+					(not (blocks ?v ?it)) (not (= ?v ?char)))
+		:effect (and (not (has ?v ?it)) (has ?char ?it) (given ?it ?v))
+	)
+
+	(:action player_give
+		:parameters (?h - hero ?v - villager ?it - item ?l - location)
+		:precondition (and (alive ?h) (alive ?v) (at ?h ?l) (at ?v ?l) (has ?h ?it)
+					(not (blocks ?h ?it)) (not (bought ?it ?v)) (not (stolen ?it ?v)))
+		:effect (and (not (has ?h ?it)) (has ?v ?it))
 	)
 
 	(:action take
 		:parameters (?ch1 - character ?ch2 - character ?it - item ?l - location)
 		:precondition (and (alive ?ch1) (dead ?ch2) (has ?ch2 ?it) (at ?ch1 ?l) (at ?ch2 ?l))
-		:effect (and (not (has ?ch2 ?it)) (has ?ch1 ?it))
+		:effect (and (not (has ?ch2 ?it)) (has ?ch1 ?it) (taken ?it ?ch2))
 	)
 
 	(:action attack_character
@@ -97,33 +105,35 @@
 
 	(:action talk
 		:parameters (?ch1 - character ?ch2 - character ?inf - information ?l - location)
-		:precondition (and (alive ?ch1) (alive ?ch2) (at ?ch1 ?l) (at ?ch2 ?l) (knows ?ch1 ?inf) (not (secret ?inf)))
-		:effect (and (knows ?ch2 ?inf) (talked ?ch1 ?ch2))
+		:precondition (and (alive ?ch1) (alive ?ch2) (at ?ch1 ?l) (at ?ch2 ?l) (knows ?ch1 ?inf)
+				 (not (secret ?inf)) (not (= ?ch1 ?ch2)))
+		:effect (and (knows ?ch2 ?inf) (talked ?ch1 ?ch2 ?inf))
 	)
 
 	(:action spy
 		:parameters (?h - hero ?ch - character ?inf - information ?l - location)
-		:precondition (and (alive ?h) (alive ?ch) (at ?h ?l) (at ?ch ?l) (knows ?ch ?inf))
-		:effect (and (knows ?h ?inf) (spied ?h ?ch))
+		:precondition (and (alive ?h) (alive ?ch) (at ?h ?l) (at ?ch ?l) (knows ?ch ?inf) (not (= ?h ?ch)))
+		:effect (and (knows ?h ?inf) (spied ?h ?ch ?inf))
 	)
 
 	(:action bribe
 		:parameters (?h - hero ?ch - character ?inf - information ?l - location ?it - item)
 		:precondition (and (alive ?h) (alive ?ch) (at ?h ?l) (at ?ch ?l) (knows ?ch ?inf) (secret ?inf) 
-					(inf_cost ?inf ?it) (has ?h ?it))
+					(inf_cost ?inf ?it) (has ?h ?it) (not (= ?h ?ch)))
 		:effect (and (knows ?h ?inf) (not(has ?h ?it)) (has ?ch ?it) (bribed ?ch))
 	)
 
 	(:action intimidate
 		:parameters (?h - hero ?ch - character ?inf - information ?l - location)
-		:precondition (and (alive ?h) (alive ?ch) (at ?h ?l) (at ?ch ?l) (knows ?ch ?inf) (secret ?inf))
+		:precondition (and (alive ?h) (alive ?ch) (at ?h ?l) (at ?ch ?l) (knows ?ch ?inf) (secret ?inf)
+				(not (= ?h ?ch)))
 		:effect (and (knows ?h ?inf) (scared ?ch))
 	)
 
 	(:action read
 		:parameters (?h - hero ?it - item ?inf - information)
 		:precondition (and (alive ?h) (has ?h ?it) (contains_inf ?it ?inf))
-		:effect (and (knows ?h ?inf) (read_inf ?it ?h))
+		:effect (and (knows ?h ?inf) (read_inf ?it ?h ?inf))
 	)
 
 	(:action scare_of
@@ -154,7 +164,7 @@
 	(:action break
 		:parameters (?attacker - character ?b - building)
 		:precondition (and (alive ?attacker) (at ?attacker ?b) (can_attack ?attacker) (damaged ?b))
-		:effect (and (broken ?b) (not (damaged ?b)))
+		:effect (and (broken ?b))
 	)
 
 	(:action fix_building
@@ -172,9 +182,9 @@
 	)
 
 	(:action refuse
-		:parameters (?h - hero ?ch - character ?l - location)
-		:precondition (and (at ?h ?l) (at ?ch ?l))
-		:effect (and (refused ?h ?ch))
+		:parameters (?h - hero ?v - villager ?l - location)
+		:precondition (and (at ?h ?l) (at ?v ?l))
+		:effect (and (refused ?h ?v))
 	)
 
 	(:derived (blocked ?i - item)
