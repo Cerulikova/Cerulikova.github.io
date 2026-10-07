@@ -691,6 +691,37 @@
 					hopperQuestDomain) produkuje riešenia s väčšou editačnou vzdialenosťou - teda sú od seba odlišnejšie.
 				</div>
 			</details>
+			<details>
+				<summary>7.10.2026 - Doména s rozdielnymi cenami akcií</summary>
+				<div class="diaryEntry">
+					Takže, skúšam ešte jeden spôsob hľadania rozdielnych riešení. Teraz je to zmenou ceny jednotlivých akcií.
+					No, dôvod prečo som to doteraz neskúšala bol ten, že som si myslela, že to bude zložité spraviť. Nikde
+					som nevedela nájsť ako sa to robí. Ani na stránke Fast Downward a ani na stránke o PDDL. Ukázlo sa totiž,
+					že Fast Downward podporuje PDDL verziu 2.2 a ceny akcií sú až vo verzii 3.1, ale túto jednu vec FD podporuje
+					aj z tejto novšej verzie. Ale nikde sa mi nepodarilo nájsť príklad, ako sa to zapíše, než v tej AI odpovedi,
+					čo prehliadač generuje. Takže som to musela zobrať odtiaľ. (Nerada odtiaľ beriem informácie). Ale funguje to
+					a mám tertiu verziu domény - <em>HopperCost</em>. Zachvíľu ich budem mať toľko, že ich budem môcť začať
+					predávať.
+					<br><br>
+					Táto verzia vyzerá už dosť sľubne. Nepotrebuje totiž dopredu poznať predpokladáné spôsoby riešenia a zároveň
+					nerobí riešenia, ktoré obsahujú nejaké nezmyselné akcie, ktoré nijak nesmerujú k splneniu úlohy. Vtipné je
+					to, že čo som to trochu manuálne testovala, tak väčšinou táto verzia našla všetky riešenia, ktoré našla aj
+					verzia HopperQuest. Len v jednom prípade našla aj nejaké iné riešenia. Takže som tú tabulku riešení asi
+					navrhla celkom dobre. :P
+					<br><br>
+					Momentálne píšem program, ktorý by dokázala opakovane spúšťať plánovač na tejto novej doméne a nejakom jej
+					probléme a získal všetky možné rôzne riešenia. Chcem totiž vedieť koľko rôznych riešení reálne dostanem, 
+					keď to spustím napríklad 100 krát. Tiež by som chcela vyskúšať, ako ovplyvní počet riešení rôzny spôsob zmeny
+					cien akcií medzi jedotlivými iteráciami. Zatiaľ mi napadajú tri spôsoby:
+					<ul>
+						<li>Zvýšenie ceny o 1 za prvý výskyt v riešení</li>
+						<li>Zvýšenie ceny o 1 za každý výskyt v riešení</li>
+						<li>Náhodné zvyšovanie ceny</li>
+					</ul>
+					Takysto chcem ešte vyskúšať, či budem dostávať lepšie výsledky, keď sa bude cena meniť všetkým akciám, alebo
+					keď niektoré špeciálne akcie (hlavne go a player_give) budú vždy zdarma.
+				</div>
+			</details>
 			<!--<details>
 				<summary>Testovací vstup</summary>
 				<div class="diaryEntry">
