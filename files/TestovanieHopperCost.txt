@@ -1,0 +1,259 @@
+Doménu hopperCost.pddl testujem s úlohou Cure the Hunter.
+Na začiatku sú ceny všetkých akcií nastavené na 0.
+Akcie go, player_give, run_away a refuse nezvyšujú cenu riešenia.
+Nebudem meniť cieľ plánu, len hodnoty akcií v probléme.
+Metóda zvyšovania: vždy keď je akcia v pláne, zvýšim jej cenu o jedna. 
+
+1. riešenie:
+	(go hopper village mill)
+	(steal hopper mage med2 mill)
+	(go hopper mill village)
+	(cure hopper hunter med2 village)
+	; cost = 0 (general cost)
+
+--> (= (steal-cost) 1), (= (cure-cost) 1)
+
+2. riešenie:
+	(give hunter hopper gold village)
+	(go hopper village mill)
+	(buy mage hopper med2 gold mill)
+	(go hopper mill village)
+	(cure hopper hunter med2 village)
+	; cost = 1 (general cost)
+
+--> (= (give-cost) 1), (= (buy-cost) 1), (= (steal-cost) 1), (= (cure-cost) 2)
+
+3. riešenie:
+	(go hopper village meadow)
+	(go hopper meadow forest)
+	(collect hopper med1 forest)
+	(go hopper forest meadow)
+	(go hopper meadow village)
+	(cure hopper hunter med1 village)
+	; cost = 2 (general cost)
+
+--> (= (give-cost) 1), (= (buy-cost) 1), (= (steal-cost) 1), (= (cure-cost) 3),
+    (= (collect-cost) 1)
+
+4. riešenie:
+	(go hopper village mill)
+	(attack_character hopper mage mill)
+	(kill hopper mage mill)
+	(take hopper mage med2 mill)
+	(go hopper mill village)
+	(cure hopper hunter med2 village)
+	; cost = 3 (general cost)
+
+--> (= (give-cost) 1), (= (buy-cost) 1), (= (steal-cost) 1), (= (cure-cost) 4),
+    (= (collect-cost) 1), (= (attack-ch-cost) 1), (= (kill-cost) 1), 
+    (= (take-cost) 1)
+
+5. riešenie:
+	(go hopper village mill)
+	(steal hopper mage med2 mill)
+	(go hopper mill village)
+	(cure hopper hunter med2 village)
+	; cost = 5 (general cost)
+	* zopakovanie prvého riešenia
+
+--> (= (give-cost) 1), (= (buy-cost) 1), (= (steal-cost) 2), (= (cure-cost) 5),
+    (= (collect-cost) 1), (= (attack-ch-cost) 1), (= (kill-cost) 1), 
+    (= (take-cost) 1)
+
+6. riešenie:
+	(go hopper village meadow)
+	(go hopper meadow forest)
+	(collect hopper med1 forest)
+	(go hopper forest meadow)
+	(go hopper meadow village)
+	(cure hopper hunter med1 village)
+	; cost = 6 (general cost)
+	* zopakovanie 3. riešenia
+
+--> (= (give-cost) 1), (= (buy-cost) 1), (= (steal-cost) 2), (= (cure-cost) 6),
+    (= (collect-cost) 2), (= (attack-ch-cost) 1), (= (kill-cost) 1), 
+    (= (take-cost) 1)
+
+7. riešenie:
+	(give hunter hopper gold village)
+	(go hopper village mill)
+	(buy mage hopper med2 gold mill)
+	(go hopper mill village)
+	(cure hopper hunter med2 village)
+	; cost = 8 (general cost)
+	* zopakovanie 2. riešenia
+
+Pri tejto metóde zvyšovania ceny akcií už asi nové riešenia nenájde.
+Treba overiť nejakým programom - spustiť sto krát a zistiť, koľko rôznych
+reálne spravil.
+Riešenia, ktoré sme získali dávajú dobrý logický zmysel a sú to všetky
+riešenia, ktoré sme získali aj pomocou domény HopperQuest bez toho, aby sme
+poznali možné typy riešení.
+
+Úloha Bring old book:
+Všetky ceny sú na začiatku nastavené na 0.
+1. riešenie:
+	(go hopper mill village)
+	(go hopper village shop)
+	(steal hopper shopkeeper old_book shop)
+	(go hopper shop village)
+	(go hopper village mill)
+	(buy mage hopper gold_coin old_book mill)
+	; cost = 0 (general cost)
+
+--> (= (steal-cost) 1), (= (buy-cost) 1)
+
+2. riešenie:
+	(go hopper mill village)
+	(go hopper village shop)
+	(attack_character hopper shopkeeper shop)
+	(kill hopper shopkeeper shop)
+	(take hopper shopkeeper old_book shop)
+	(go hopper shop village)
+	(go hopper village mill)
+	(attack_character hopper mage mill)
+	(player_give hopper mage old_book mill)
+	(kill hopper mage mill)
+	(take hopper mage gold_coin mill)
+	; cost = 0 (general cost)
+
+--> (= (steal-cost) 1), (= (buy-cost) 1), (= (attack-ch-cost) 1), 
+    (= (kill-cost) 1), (= (take-cost) 1)
+
+3. riešenie:
+	(steal hopper mage gold_coin mill)
+	(go hopper mill village)
+	(go hopper village shop)
+	(steal hopper shopkeeper old_book shop)
+	(go hopper shop village)
+	(go hopper village mill)
+	(player_give hopper mage old_book mill)
+	; cost = 2 (general cost)
+
+--> (= (steal-cost) 2), (= (buy-cost) 1), (= (attack-ch-cost) 1), 
+    (= (kill-cost) 1), (= (take-cost) 1)
+
+4. riešenie:
+	(go hopper mill village)
+	(go hopper village meadow)
+	(collect hopper black_lily meadow)
+	(go hopper meadow village)
+	(go hopper village shop)
+	(buy shopkeeper hopper old_book black_lily shop)
+	(go hopper shop village)
+	(go hopper village mill)
+	(buy mage hopper gold_coin old_book mill)
+	; cost = 2 (general cost)
+
+--> (= (steal-cost) 2), (= (buy-cost) 2), (= (attack-ch-cost) 1), 
+    (= (kill-cost) 1), (= (take-cost) 1), (= (collect-cost) 1)
+
+5. riešenie:
+	(steal hopper mage gold_coin mill)
+	(go hopper mill village)
+	(go hopper village shop)
+	(steal hopper shopkeeper old_book shop)
+	(go hopper shop village)
+	(go hopper village mill)
+	(player_give hopper mage old_book mill)
+	; cost = 4 (general cost)
+	* zopakovanie 3. riešenia
+
+--> (= (steal-cost) 3), (= (buy-cost) 2), (= (attack-ch-cost) 1), 
+    (= (kill-cost) 1), (= (take-cost) 1), (= (collect-cost) 1)
+
+6. riešenie:
+	(go hopper mill village)
+	(go hopper village shop)
+	(steal hopper shopkeeper old_book shop)
+	(go hopper shop village)
+	(go hopper village mill)
+	(buy mage hopper gold_coin old_book mill)
+	; cost = 5 (general cost)
+	* zopakovanie 1. riešenia
+
+Nájdené riešenia nie vždy dávajú úplný zmysel, ale stále všetky akcie smerujú
+k splnenie cieľa. (Nie je tam niečo úplne náhodné)
+
+Úloha Learn about a note.
+Všetky ceny sú na začiatku nastavené na 0.
+
+1. riešenie:
+	(go hopper mill village)
+	(spy hopper hunter note village)
+	; cost = 0 (general cost)
+
+--> (= (spy-cost) 1)
+
+2. riešenie:
+	(go hopper mill village)
+	(talk hunter hopper note village)
+	; cost = 0 (general cost)
+
+--> (= (spy-cost) 1), (= (talk-cost) 1)
+
+3. riešenie:
+	(go hopper mill village)
+	(go hopper village shop)
+	(collect hopper list shop)
+	(read hopper list note)
+	; cost = 0 (general cost)
+
+--> (= (spy-cost) 1), (= (talk-cost) 1), (= (collect-cost) 1), 
+    (= (read-cost) 1)
+
+4. riešenie:
+	(go hopper mill village)
+	(spy hopper hunter note village)
+	; cost = 1 (general cost)
+	* zopakovanie prvého
+
+--> (= (spy-cost) 2), (= (talk-cost) 1), (= (collect-cost) 1), 
+    (= (read-cost) 1)
+
+5. riešenie: 
+	(go hopper mill village)
+	(talk hunter hopper note village)
+	; cost = 1 (general cost)
+	* zopakovanie druhého
+
+Úloha Werewolf problem.
+Všetky akciw majú na začiatku cenu 0.
+
+1. riešenie:
+	(go hopper shop village)
+	(go hopper village meadow)
+	(attack_character hopper werewolf meadow)
+	(kill hopper werewolf meadow)
+	; cost = 0 (general cost)
+
+--> (= (attack-ch-cost) 1), (= (kill-cost) 1)
+
+2. riešenie:
+	(go hopper shop village)
+	(go hopper village meadow)
+	(attack_character hopper werewolf meadow)
+	(scare_of hopper werewolf meadow)
+	(run_away werewolf meadow forest)
+	; cost = 1 (general cost)
+
+--> (= (attack-ch-cost) 2), (= (kill-cost) 1), (= (scare-cost)1)
+
+3. riešenie:
+	(go hopper shop village)
+	(go hopper village meadow)
+	(attack_character hopper werewolf meadow)
+	(kill hopper werewolf meadow)
+	; cost = 3 (general cost)
+	* zopakovanie 1.riešenia
+
+--> (= (attack-ch-cost) 3), (= (kill-cost) 2), (= (scare-cost)1)
+
+4. riešenie:
+	(go hopper shop village)
+	(go hopper village meadow)
+	(attack_character hopper werewolf meadow)
+	(scare_of hopper werewolf meadow)
+	(run_away werewolf meadow forest)
+	; cost = 4 (general cost)
+	* zopakovanie 2. riešenia

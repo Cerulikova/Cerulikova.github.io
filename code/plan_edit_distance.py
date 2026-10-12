@@ -49,7 +49,7 @@ def distance2(planA, planB):
         matrix[0][i] = i
 
     solveMatrix2(matrix, lenA, lenB, actA, actB)
-    prettyPrint(matrix)
+    #prettyPrint(matrix)
     return matrix[lenA][lenB]
 
 def splitPlanActions(plan):
@@ -101,6 +101,42 @@ def removeNumbers(plan):
                 numberOfNs += 1
         newPlanList.append(newAction.strip() + ")")
     return '\n\t'.join(newPlanList)
+
+#####################################
+def readSolutions(solutionFile):
+    solutions = []
+    file = open(solutionFile, "r")
+    solution = ""
+    for line in file:
+        line = line.strip()
+        if line == "":
+            solutions.append(solution)
+            solution = ""
+            continue
+        if line[0] != "(":
+            continue
+        solution += line
+    file.close()
+    return solutions
+
+def compareDistanceOfSolutions(solutions):
+    result = {}
+    numberOfSolutions = len(solutions)
+    for i in range(numberOfSolutions):
+        for j in range(i, numberOfSolutions):
+            if solutions[i] != solutions[j]:
+                dist = distance2(solutions[i], solutions[j])
+                result["(" + str(i+1) + ", " + str(j+1) + ")"] = dist
+    avg = 0
+    for d in result.values():
+        avg += d
+    avg = avg/(len(result))
+    result["avg"] = avg
+    return result
+
+def readAndCompare(solutionFile):
+    solutions = readSolutions(solutionFile)
+    return compareDistanceOfSolutions(solutions)
 
 testA = "k i t t e n"
 testB = "s i t t i n g"

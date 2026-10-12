@@ -722,6 +722,34 @@
 					keď niektoré špeciálne akcie (hlavne go a player_give) budú vždy zdarma.
 				</div>
 			</details>
+			<details>
+				<summary>12.10.2026 - Experimentovanie s HopperCost</summary>
+				<div class="diaryEntry">
+					Dopísala som <em>hopper_cost_evaluator.py</em> s funkcimi na automatické iteratívne volanie hopperCost úlohy,
+					pričom sa medzi jednotlivými iteráciami mení cena akcií podľa jednej z troch funkcií. Funkcie sú nasledovné:
+					<ol>
+						<li>Zvýšenie ceny o 1 za prvý výskyt v riešení</li>
+						<li>Zvýšenie ceny o 1 za každý výskyt v riešení</li>
+						<li>Náhodné zvyšovanie ceny o 0-5 (5 už nie) za prvý výskyt v riešení</li>
+					</ol>
+					Celé sa to spúšťa tak, že najprv treba vytvoriť inštanciu triedy <code>HopperCostEvaluator</code> a potom
+					zavolať metódu <code>run</code> s absolútnou cestou k doméne, problému a počet iterácií, ktoré sa majú
+					vykonať. Nájdené unikátne riešenia budú v súbore <em>foundSolutions.txt</em>. Funkcia, ktorú chcem použiť
+					sa nastavuje metódou <code>setActionCostFunction(cisloFunkcie)</code> pred voláním <code>run</code>.
+					Dopísala som aj <em>plan_edit_distance.py</em> o funkciu <code>readAndCompare</code>, ktorá prečíta plány z
+					daného súboru (<em>foundSolutions.txt</em>) a vyráta editačnú vzdialenosť medzi každým z nich.
+					<br><br>
+					Toto som použila na Experimentovanie s hopperCost. Výsledky sú popísané v 
+					<a class="tutlink" href="PDF/TestovanieOdlisnostiRieseni.pdf">TestovanieOdlisnostiRieseni.pdf</a>. Ale v 
+					skratke, veľmi nie je rozdiel medzi tým, ktorú funkciu použijem. 2. funkcia sa mi páči asi najviac, ale to je
+					asi tak všetko.
+					<br><br>
+					Teraz plánujem vytvoriť podobný program na iteratívne spúšťanie ešte aj pre pôvodnú doménu hopper, aby
+					som videla, čo to spraví a potom by som asi dala chvíľu prestávku od tohto a šla niečo napísať nech mám tú
+					ucelenú 15 stranovú kapitolu a niečo v tom výskume. Potom budem mať myslím už všetko na Projektový seminár a
+					bude mi chýbať len prezentácia na koniec semestra. 
+				</div>
+			</details>
 			<!--<details>
 				<summary>Testovací vstup</summary>
 				<div class="diaryEntry">
